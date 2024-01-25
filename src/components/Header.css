@@ -1,0 +1,17 @@
+/* src/components/Header.css */
+
+header {
+  background-color: darkgoldenrod; /* Set your desired background color */
+}
+
+.navbar {
+  padding: 1rem 0; /* Adjust padding as needed */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff; /* Set your desired text color */
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-color: #ffffff; /* Set your desired color for the hamburger icon */
+}
