@@ -17,11 +17,11 @@ export default function Header () {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-md navbar-dark bg-primary">
+      <nav className="navbar navbar-expand-md navbar-dark bg-primary navbar-header">
         <div className="container">
           <div className="collapse navbar-collapse" id="navbarNav">
-          <button onClick={handleLogin} className="login-button">
-            <IoIosLogIn className="icon" />
+          <button onClick={handleLogin} className="login-button-header">
+            <IoIosLogIn className="icon-header" />
           </button>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 .management-container {
     max-width: 600px;
-    height: 80vh;
+    min-height: 80vh;
     margin: 0 auto;
   }
   
@@ -96,10 +96,6 @@ body {
 .table-primary {
   background-color: #007bff;
   color: #ffffff;
-}
-
-.navbar {
-  background-color: #007bff;
 }
 
 .nav-link {

@@ -7,10 +7,11 @@
 
 html,body{
   min-height: 100%;
+  background: linear-gradient(rgba(44, 224, 224, 0.685), rgba(0, 102, 255, 0.452), rgb(110, 168, 190));
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   overflow: auto;
 }

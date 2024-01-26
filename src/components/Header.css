@@ -9,7 +9,12 @@
 
 /* Style the navigation bar */
 .navbar {
-  padding: 1rem 0;
+  padding: 5px 0;
+  margin-bottom: 1rem;
+}
+
+.navbar-header{
+  background: linear-gradient(rgb(255, 255, 255),#b2e9f1);
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -21,21 +26,21 @@
 }
 
 /* Style the login button */
-.login-button {
+.login-button-header {
   float: right;
   margin: 5px;
   background-color: rgba(255, 255, 255, 0);
   color: rgba(0, 0, 255, 0);
-  border: 1px solid rgb(255, 255, 255);
+  border: rgba(255, 255, 255, 0);
   border-radius: 5px;
   cursor: pointer;
   margin-right: 50px;
 }
 
 /* Style the icon */
-.icon {
+.icon-header {
   font-size: 20px;
-  color: white;
+  color: rgb(255, 43, 43);
 }
 
 /* Clear the float effect */
