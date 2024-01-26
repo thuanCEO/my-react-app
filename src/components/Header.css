@@ -15,3 +15,34 @@ header {
 .navbar-dark .navbar-toggler-icon {
   background-color: #ffffff; /* Set your desired color for the hamburger icon */
 }
+
+/* Định dạng nút đăng nhập */
+.login-button {
+  /* Đẩy nút sang bên phải */
+  float: right;
+  /* Thêm một khoảng cách nhỏ giữa nút và biên */
+  margin: 5px;
+  /* Thay đổi màu nền và màu chữ của nút */
+  background-color: white;
+  color: blue;
+  /* Thêm một đường viền mỏng xung quanh nút */
+  border: 1px solid blue;
+  /* Làm tròn các góc của nút */
+  border-radius: 5px;
+  /* Thay đổi con trỏ khi di chuyển qua nút */
+  cursor: pointer;
+}
+
+/* Định dạng biểu tượng */
+.icon {
+  /* Đặt kích thước của biểu tượng bằng 20px */
+  font-size: 20px;
+  /* Đặt màu sắc của biểu tượng bằng màu xanh */
+  color: blue;
+}
+
+/* Xóa bỏ hiệu ứng float */
+.container {
+  /* Sử dụng thuộc tính overflow với giá trị hidden */
+  overflow: hidden;
+}
