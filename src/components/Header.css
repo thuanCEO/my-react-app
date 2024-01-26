@@ -1,48 +1,48 @@
-/* src/components/Header.css */
-
-header {
-  background-color: darkgoldenrod; /* Set your desired background color */
+/* Style the header */
+.header {
+  padding: 10px 16px;
+  background-color: darkgoldenrod;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
+/* Style the navigation bar */
 .navbar {
-  padding: 1rem 0; /* Adjust padding as needed */
+  padding: 1rem 0;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: #ffffff; /* Set your desired text color */
+  color: #ffffff;
 }
 
 .navbar-dark .navbar-toggler-icon {
-  background-color: #ffffff; /* Set your desired color for the hamburger icon */
+  background-color: #ffffff;
 }
 
-/* Định dạng nút đăng nhập */
+/* Style the login button */
 .login-button {
-  /* Đẩy nút sang bên phải */
   float: right;
-  /* Thêm một khoảng cách nhỏ giữa nút và biên */
   margin: 5px;
-  /* Thay đổi màu nền và màu chữ của nút */
-  background-color: white;
-  color: blue;
-  /* Thêm một đường viền mỏng xung quanh nút */
-  border: 1px solid blue;
-  /* Làm tròn các góc của nút */
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(0, 0, 255, 0);
+  border: 1px solid rgb(255, 255, 255);
   border-radius: 5px;
-  /* Thay đổi con trỏ khi di chuyển qua nút */
   cursor: pointer;
 }
 
-/* Định dạng biểu tượng */
+/* Style the icon */
 .icon {
-  /* Đặt kích thước của biểu tượng bằng 20px */
   font-size: 20px;
-  /* Đặt màu sắc của biểu tượng bằng màu xanh */
-  color: blue;
+  color: white;
 }
 
-/* Xóa bỏ hiệu ứng float */
+/* Clear the float effect */
 .container {
-  /* Sử dụng thuộc tính overflow với giá trị hidden */
   overflow: hidden;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement */
+.content {
+  padding-top: 102px;
 }
