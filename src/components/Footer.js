@@ -14,7 +14,7 @@ export default function Footer () {
         </div>
         <div className="col-md-6">
           <div>
-            <h5>Contact Us</h5>
+            <h3>Contact Us</h3>
             <address className='address-box'>
               <p>
                 123 Main Street, <br />

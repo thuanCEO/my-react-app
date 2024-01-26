@@ -29,7 +29,7 @@ export default function Details() {
   }, [productId]);
 
   return (
-    <div className="container mt-5">
+    <div className="container-detail mt-5">
       <h2>Product Details</h2>
       {productDetails ? (
         <div className="product-details">

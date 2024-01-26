@@ -1,7 +1,8 @@
 /* src/pages/Details.css */
 
-.container {
+.container-detail {
     max-width: 800px;
+    height: 80vh;
     margin: 0 auto;
   }
   
