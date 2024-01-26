@@ -48,14 +48,14 @@ export default function Management() {
         />
         <button onClick={addProduct} className="add-button">Add Product</button>
       </div>
-      <ul className="product-list">
+      {/* <ul className="product-list">
         {orders.map(product => (
           <li key={product.id} className="product-item">
             {product.name}
             <button onClick={() => deleteProduct(product.id)} className="delete-button">Delete</button>
           </li>
         ))}
-      </ul>
+      </ul> */}
 
       <div className="container-fluid">
         <div className="row">

@@ -4,8 +4,8 @@ import './Footer.css';
 export default function Footer () {
   return (
     <footer className="footer">
-    <div className="container">
-      <div className="row">
+    <div className="container-footer">
+      <div className="footer-box">
         <div className="col-md-6">
           <div>
             <h3>Company Logo</h3>
@@ -15,15 +15,17 @@ export default function Footer () {
         <div className="col-md-6">
           <div>
             <h5>Contact Us</h5>
-            <address>
+            <address className='address-box'>
               <p>
                 123 Main Street, <br />
                 Cityville, State, 12345 <br />
-                Email: info@example.com <br />
-                Phone: (123) 456-7890
+                </p>Email: info@example.com <br />
+                Phone: (123) 456-7890<p>
               </p>
             </address>
           </div>
+        </div>
+        <div className="col-md-6">
         </div>
       </div>
     </div>

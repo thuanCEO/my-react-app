@@ -1,8 +1,8 @@
 /* src/components/Footer.css */
 .footer {
-  background-color: #343a40;
+  background: linear-gradient( #464d54, rgb(77, 20, 20));
   color: #ffffff;
-  padding: 20px 0; /* Thu nhỏ độ cao của footer */
+  padding-bottom: 20px; /* Thu nhỏ độ cao của footer */
 }
 
 .footer h3,
@@ -27,4 +27,20 @@
 
 .footer a:hover {
   text-decoration: underline;
+}
+
+.container-footer{
+  /* display: flex; */
+}
+
+.footer-box{
+  display: flex;
+  grid-gap: 250px;
+  padding-left: 30px;
+  text-align: center;
+}
+
+.address-box {
+    display: flex;
+    grid-gap: 50px;
 }
