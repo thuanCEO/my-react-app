@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import { FaRegUserCircle, FaLock } from "react-icons/fa";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -24,15 +25,15 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2 className="login-title">Login</h2>
+        <h1 className="login-title">Login</h1>
         <form className="login-form">
           <div className="login-input-group">
-            <label className="login-label">Username:</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="login-input" />
+            <input placeholder='Username' type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="login-input" />
+            <FaRegUserCircle  className="icon"/>
           </div>
           <div className="login-input-group">
-            <label className="login-label">Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
+            <input placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
+            <FaLock className="icon"/>
           </div>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="login-button-group">
