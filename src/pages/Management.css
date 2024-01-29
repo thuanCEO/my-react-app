@@ -105,19 +105,6 @@ body {
   color: #ffffff;
 }
 
-.btn {
-  cursor: pointer;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: #ffffff;
-}
 .table-manage-order{
   max-width: fit-content;
 }
@@ -127,4 +114,8 @@ body {
   border: 2px solid rgba(95, 92, 92, 0.2);
   backdrop-filter: blur(9px);
   border-radius: 12px;
+}
+
+.icon-table{
+  font-size: large;
 }

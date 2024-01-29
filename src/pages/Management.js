@@ -54,7 +54,7 @@ export default function Management() {
 
         return (
           <Button variant="contained" color="primary" onClick={onClick}>
-            <BiSolidDetail />
+            <BiSolidDetail className="icon-table" />
           </Button>
         );
       },
@@ -67,7 +67,7 @@ export default function Management() {
       renderCell: (params) => {
         return (
           <Button variant="contained" color="primary">
-            <FaRegEdit />
+            <FaRegEdit className="icon-table" />
           </Button>
         );
       },
@@ -80,21 +80,11 @@ export default function Management() {
       renderCell: (params) => {
         return (
           <Button variant="contained" color="error">
-            <MdDeleteOutline />
+            <MdDeleteOutline className="icon-table" />
           </Button>
         );
       },
     },
-
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    // },
   ];
 
   const rows = [
@@ -125,15 +115,6 @@ export default function Management() {
           Add Product
         </button>
       </div>
-      {/* <ul className="product-list">
-        {orders.map(product => (
-          <li key={product.id} className="product-item">
-            {product.name}
-            <button onClick={() => deleteProduct(product.id)} className="delete-button">Delete</button>
-          </li>
-        ))}
-      </ul> */}
-
       <div className="container-fluid">
         <div className="row">
           {/* Right Content */}
@@ -167,47 +148,6 @@ export default function Management() {
                           checkboxSelection
                         />
                       </div>
-
-                      {/* <div className="table-responsive">
-                        
-                        <table className="table table-bordered table-hover">
-                          // ... (Content of the table) ... 
-                          <thead>
-                            <tr className="table-primary">
-                              <th scope="col">#</th>
-                              <th scope="col">Order</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            // Sample product rows
-                            // Add more product rows as needed 
-                            {orders.map((product) => (
-                              <tr key={product.id}>
-                                <th scope="row">{product.id}</th>
-                                <td>{product.name}</td>
-                                <td>{product.price}</td>
-                                <td>
-                                  <button type="button" className="btn btn-warning">
-                                    Edit
-                                  </button>
-                                  <button type="button" className="btn btn-danger">
-                                    Delete
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="btn btn-info"
-                                    onClick={() => handleDetailsClick(product.id)}
-                                  >
-                                    Details
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div> */}
                     </div>
                   </div>
                 </div>
