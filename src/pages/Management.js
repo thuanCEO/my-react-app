@@ -1,23 +1,31 @@
 // src/components/Management.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Management.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
+import { BiSolidDetail } from "react-icons/bi";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+
+import { Button } from "@mui/material";
+import "./Management.css";
 
 export default function Management() {
   const [products, setProducts] = useState([]);
-  const [productName, setProductName] = useState('');
+  const [productName, setProductName] = useState("");
 
   const addProduct = () => {
-    if (productName.trim() !== '') {
+    if (productName.trim() !== "") {
       setProducts([...products, { id: Date.now(), name: productName }]);
-      setProductName('');
+      setProductName("");
     }
   };
 
   const deleteProduct = (productId) => {
-    const updatedProducts = products.filter(product => product.id !== productId);
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
     setProducts(updatedProducts);
-   
+
     console.log(`Details clicked for product with ID: ${productId}`);
   };
 
@@ -28,29 +36,78 @@ export default function Management() {
     navigate(`/details/${productId}`);
     console.log(`Details clicked for product with ID: ${productId}`);
   };
-  const orders = [
-    { id: 1, name: 'Product 1', price: '$19.99' },
-    { id: 2, name: 'Product 2', price: '$29.99' },
-    { id: 3, name: 'Product 3', price: '$24.99' },
-    { id: 4, name: 'Product 4', price: '$19.99' },
-    { id: 5, name: 'Product 5', price: '$29.99' },
-    { id: 6, name: 'Product 6', price: '$24.99' },
-    { id: 7, name: 'Product 7', price: '$19.99' },
-    { id: 8, name: 'Product 8', price: '$29.99' },
-    { id: 9, name: 'Product 9', price: '$24.99' },
-    { id: 10, name: 'Product 1', price: '$19.99' },
-    { id: 11, name: 'Product 2', price: '$29.99' },
-    { id: 12, name: 'Product 3', price: '$24.99' },
-    { id: 13, name: 'Product 1', price: '$19.99' },
-    { id: 14, name: 'Product 2', price: '$29.99' },
-    { id: 15, name: 'Product 3', price: '$24.99' },
-    { id: 16, name: 'Product 1', price: '$19.99' },
-    { id: 17, name: 'Product 2', price: '$29.99' },
-    { id: 18, name: 'Product 3', price: '$24.99' },
-    { id: 19, name: 'Product 1', price: '$19.99' },
-    { id: 20, name: 'Product 2', price: '$29.99' },
-    { id: 21, name: 'Product 3', price: '$24.99' },
-    // Add more products as needed
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "name", headerName: "Name", width: 130 },
+    { field: "price", headerName: "Price", width: 130 },
+    {
+      field: "detail",
+      headerName: "Detail",
+      sortable: false,
+      width: 90,
+      renderCell: (params) => {
+        const onClick = (e) => {
+          e.stopPropagation();
+          handleDetailsClick(params.row.id);
+        };
+
+        return (
+          <Button variant="contained" color="primary" onClick={onClick}>
+            <BiSolidDetail />
+          </Button>
+        );
+      },
+    },
+    {
+      field: "edit",
+      headerName: "Edit",
+      sortable: false,
+      width: 90,
+      renderCell: (params) => {
+        return (
+          <Button variant="contained" color="primary">
+            <FaRegEdit />
+          </Button>
+        );
+      },
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      sortable: false,
+      width: 90,
+      renderCell: (params) => {
+        return (
+          <Button variant="contained" color="error">
+            <MdDeleteOutline />
+          </Button>
+        );
+      },
+    },
+
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    // },
+  ];
+
+  const rows = [
+    { id: 1, name: "Product 1", price: "$19.99" },
+    { id: 2, name: "Product 2", price: "$29.99" },
+    { id: 3, name: "Product 3", price: "$24.99" },
+    { id: 4, name: "Product 4", price: "$19.99" },
+    { id: 5, name: "Product 5", price: "$29.99" },
+    { id: 6, name: "Product 6", price: "$24.99" },
+    { id: 7, name: "Product 7", price: "$19.99" },
+    { id: 8, name: "Product 8", price: "$29.99" },
+    { id: 9, name: "Product 9", price: "$24.99" },
+    { id: 10, name: "Product 1", price: "$19.99" },
   ];
 
   return (
@@ -64,7 +121,9 @@ export default function Management() {
           onChange={(e) => setProductName(e.target.value)}
           className="product-input"
         />
-        <button onClick={addProduct} className="add-button">Add Product</button>
+        <button onClick={addProduct} className="add-button">
+          Add Product
+        </button>
       </div>
       {/* <ul className="product-list">
         {orders.map(product => (
@@ -80,7 +139,10 @@ export default function Management() {
           {/* Right Content */}
           <div className="col-lg-10 col-md-9">
             {/* Top navbar */}
-            <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+            <nav
+              className="navbar navbar-top navbar-expand-md navbar-dark"
+              id="navbar-main"
+            >
               {/* Your existing top navbar content here */}
             </nav>
             {/* Page content */}
@@ -90,9 +152,31 @@ export default function Management() {
                   <div className="card p-5">
                     <div className="mume markdown-preview">
                       <h2 className="mume-header">Product List</h2>
-                      <div className="table-responsive">
+
+                      <div className="table-manage-order">
+                        <DataGrid
+                          className="table-manage-order-box"
+                          rows={rows}
+                          columns={columns}
+                          initialState={{
+                            pagination: {
+                              paginationModel: { page: 0, pageSize: 5 },
+                            },
+                          }}
+                          pageSizeOptions={[5, 10]}
+                          checkboxSelection
+                          style={{
+                            alignItems: "center",
+                            justifyCntent: "center",
+                            textalign: "center",
+                          }}
+                        />
+                      </div>
+
+                      {/* <div className="table-responsive">
+                        
                         <table className="table table-bordered table-hover">
-                          {/* ... (Content of the table) ... */}
+                          // ... (Content of the table) ... 
                           <thead>
                             <tr className="table-primary">
                               <th scope="col">#</th>
@@ -102,8 +186,8 @@ export default function Management() {
                             </tr>
                           </thead>
                           <tbody>
-                            {/* Sample product rows */}
-                            {/* Add more product rows as needed */}
+                            // Sample product rows
+                            // Add more product rows as needed 
                             {orders.map((product) => (
                               <tr key={product.id}>
                                 <th scope="row">{product.id}</th>
@@ -128,7 +212,7 @@ export default function Management() {
                             ))}
                           </tbody>
                         </table>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -139,5 +223,4 @@ export default function Management() {
       </div>
     </div>
   );
-};
-
+}
