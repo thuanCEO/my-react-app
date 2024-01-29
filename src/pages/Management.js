@@ -165,11 +165,6 @@ export default function Management() {
                           }}
                           pageSizeOptions={[5, 10]}
                           checkboxSelection
-                          style={{
-                            alignItems: "center",
-                            justifyCntent: "center",
-                            textalign: "center",
-                          }}
                         />
                       </div>
 

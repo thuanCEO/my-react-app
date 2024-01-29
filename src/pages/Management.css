@@ -119,7 +119,7 @@ body {
   color: #ffffff;
 }
 .table-manage-order{
-  width: fit-content;
+  max-width: fit-content;
 }
 .table-manage-order-box {
   background: transparent;
