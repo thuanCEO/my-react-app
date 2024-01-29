@@ -71,3 +71,55 @@
   .table tbody tr:hover {
     background-color: #ddd;
   }
+
+  .container-detail {
+    max-width: 800px;
+    min-height: 80vh;
+    margin: 0 auto;
+  }
+  
+  .product-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-details h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .product-details table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .product-details th, .product-details td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .product-details th {
+    background-color: #f2f2f2;
+  }
+  
+  .product-details tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .product-details tbody tr:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .product-actions {
+    margin-top: 10px;
+  }
+  
+  .loading-message {
+    margin-top: 20px;
+    font-style: italic;
+    color: #555;
+  }
