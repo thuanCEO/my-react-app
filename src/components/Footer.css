@@ -1,6 +1,6 @@
 /* src/components/Footer.css */
 .footer {
-  background: linear-gradient( #464d54, rgb(77, 20, 20));
+  background: #464d54;
   color: #ffffff;
   padding-bottom: 20px; /* Thu nhỏ độ cao của footer */
   padding-top: 10px;

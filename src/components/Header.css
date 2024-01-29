@@ -9,12 +9,12 @@
 
 /* Style the navigation bar */
 .navbar {
-  padding: 5px 0;
+  /* padding: 5px 0; */
   margin-bottom: 1rem;
 }
 
 .navbar-header{
-  background: linear-gradient(rgb(255, 255, 255),#b2e9f1);
+  background: rgb(92, 91, 91);
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -37,10 +37,14 @@
   margin-right: 50px;
 }
 
+.login-button-header:hover {
+  border: 1px solid white;
+}
+
 /* Style the icon */
 .icon-header {
-  font-size: 20px;
-  color: rgb(255, 43, 43);
+  font-size: xx-large;
+  color: rgb(255, 255, 255);
 }
 
 /* Clear the float effect */
