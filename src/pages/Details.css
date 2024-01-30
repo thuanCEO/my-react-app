@@ -1,9 +1,9 @@
 /* Styles for the entire details page */
 
 .container-detail {
-  max-width: 1000px; /* Tăng kích thước container */
+  max-width: 60vw;
+  min-height: 80vh;
   margin: 0 auto;
-  padding: 20px;
 }
 
 /* Product details box */

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import './Details.css';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import "./Details.css";
+import { BiCommentDetail } from "react-icons/bi";
 
 export default function Details() {
   const { productId } = useParams();
@@ -15,12 +16,10 @@ export default function Details() {
         name: `Order ${productId}`, // Thay đổi tên thành "Order"
         description: `This is the detailed information for Order ${productId}.`,
         price: `$${(Math.random() * 100).toFixed(2)}`,
-        placeOfManufacture: 'Unknown',
+        placeOfManufacture: "Unknown",
         quantity: Math.floor(Math.random() * 100),
       };
-
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
       setProductDetails(details);
     };
 
@@ -111,8 +110,12 @@ export default function Details() {
                     <td>{order.description}</td>
                     <td>{order.price}</td>
                     <td>
-                      <button className="btn btn-primary" onClick={() => toggleDetails(index)}>
-                        {openDetails[index] ? 'Hide Details' : 'View Details'}
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => toggleDetails(index)}
+                      >
+                        <BiCommentDetail />
+                        {/* {openDetails[index] ? "Hide Details" : "View Details"} */}
                       </button>
                     </td>
                   </tr>

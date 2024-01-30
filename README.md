@@ -2,7 +2,9 @@
 
 # icon-for-react
 
-https://react-icons.github.io/react-icons/search/#q=
+    npm install react-icons --save
+
+    https://react-icons.github.io/react-icons/
 
 # before run npm start
 
