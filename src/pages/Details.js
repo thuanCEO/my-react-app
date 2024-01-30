@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import './Details.css';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import "./Details.css";
+import { BiCommentDetail } from "react-icons/bi";
 
 export default function Details() {
   const { productId } = useParams();
   const [productDetails, setProductDetails] = useState(null);
-  const [openDetails, setOpenDetails] = useState({}); // State để kiểm soát việc hiển thị của bảng chi tiết cho từng sản phẩm
+  const [openDetails, setOpenDetails] = useState({});
+  const [showProductInfo, setShowProductInfo] = useState(false); // State để kiểm soát hiển thị bảng chi tiết sản phẩm
 
   useEffect(() => {
-    // Simulating fetching product details based on the ID
     const fetchData = async () => {
-      // Simulate an API call or asynchronous operation
       const details = {
         id: productId,
-        name: `Product ${productId}`,
-        description: `This is the detailed information for Product ${productId}.`,
+        name: `Order ${productId}`, // Thay đổi tên thành "Order"
+        description: `This is the detailed information for Order ${productId}.`,
         price: `$${(Math.random() * 100).toFixed(2)}`,
-        // Add additional details
-        placeOfManufacture: 'Unknown', // Example place of manufacture
-        quantity: Math.floor(Math.random() * 100), // Example quantity
+        placeOfManufacture: "Unknown",
+        quantity: Math.floor(Math.random() * 100),
       };
-
-      // Simulate delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Set the fetched details
       setProductDetails(details);
     };
 
@@ -34,86 +29,129 @@ export default function Details() {
   const toggleDetails = (index) => {
     setOpenDetails((prev) => ({
       ...prev,
-      [index]: !prev[index], // Đảo ngược trạng thái hiển thị của bảng chi tiết cho sản phẩm có index tương ứng
+      [index]: !prev[index],
     }));
+    setShowProductInfo(!showProductInfo); // Khi nhấp vào nút "View Details", hiển thị hoặc ẩn bảng chi tiết sản phẩm
   };
 
-  // Fake data for products
-  const products = [
+  const orders = [
     {
       id: 1,
-      name: "Product 1",
+      name: "Order 1",
+      description: "This is the detailed information for Order 1.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
       placeOfManufacture: "Factory A",
       quantity: 50,
     },
     {
       id: 2,
-      name: "Product 2",
+      name: "Order 2",
+      description: "This is the detailed information for Order 2.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
       placeOfManufacture: "Factory B",
       quantity: 30,
     },
     {
       id: 3,
-      name: "Product 3",
+      name: "Order 3",
+      description: "This is the detailed information for Order 3.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
       placeOfManufacture: "Factory C",
       quantity: 20,
+    },
+    // Bổ sung thêm ba mục đặt hàng mới
+    {
+      id: 4,
+      name: "Order 4",
+      description: "This is the detailed information for Order 4.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
+      placeOfManufacture: "Factory D",
+      quantity: 40,
+    },
+    {
+      id: 5,
+      name: "Order 5",
+      description: "This is the detailed information for Order 5.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
+      placeOfManufacture: "Factory E",
+      quantity: 25,
+    },
+    {
+      id: 6,
+      name: "Order 6",
+      description: "This is the detailed information for Order 6.",
+      price: `$${(Math.random() * 100).toFixed(2)}`,
+      placeOfManufacture: "Factory F",
+      quantity: 35,
     },
   ];
 
   return (
     <div className="container-detail mt-5">
-      <h2>Product Details</h2>
+      <h2>Order Details</h2>
       {productDetails ? (
-        <>
-          {products.map((product, index) => (
-            <div key={index}>
-              <div className="product-details">
-                <div className="form-group">
-                  <label className="form-label">ID:</label>
-                  <div>{product.id}</div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Name:</label>
-                  <div>{product.name}</div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Description:</label>
-                  <div>{product.description}</div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Price:</label>
-                  <div>{product.price}</div>
-                </div>
-                <div className="product-actions">
-                  <button className="btn btn-primary" onClick={() => toggleDetails(index)}>
-                    {openDetails[index] ? 'Hide Details' : 'View Details'}
-                  </button>
-                </div>
-                {openDetails[index] && (
-                  <div className="product-details">
-                    <h3>Detail Table for Product {product.id}</h3>
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Place of Manufacture</th>
-                          <th>Quantity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{product.name}</td>
-                          <td>{product.placeOfManufacture}</td>
-                          <td>{product.quantity}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </>
+        <div className="product-details">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>View Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order, index) => (
+                <React.Fragment key={index}>
+                  <tr>
+                    <td>{order.id}</td>
+                    <td>{order.name}</td>
+                    <td>{order.description}</td>
+                    <td>{order.price}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => toggleDetails(index)}
+                      >
+                        <BiCommentDetail />
+                        {/* {openDetails[index] ? "Hide Details" : "View Details"} */}
+                      </button>
+                    </td>
+                  </tr>
+                  {openDetails[index] && showProductInfo && (
+                    <tr>
+                      <td colSpan="5">
+                        <table className="table product-info-table">
+                          <thead>
+                            <tr>
+                              <th>Origin</th>
+                              <th>Manufacturing Place</th>
+                              <th>Product Type</th>
+                              <th>Manufacture Date</th>
+                              <th>Description</th>
+                              <th>Entry Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Origin Info</td>
+                              <td>{order.placeOfManufacture}</td>
+                              <td>Product Type Info</td>
+                              <td>Manufacture Date Info</td>
+                              <td>{order.description}</td>
+                              <td>Entry Date Info</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p className="loading-message">Loading...</p>
       )}
