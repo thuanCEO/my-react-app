@@ -30,11 +30,7 @@
   text-decoration: underline;
 }
 
-.container-footer{
-  /* display: flex; */
-}
-
-.footer-box{
+.footer-box {
   display: flex;
   grid-gap: 200px;
   padding-left: 30px;
@@ -42,6 +38,6 @@
 }
 
 .address-box {
-    display: flex;
-    grid-gap: 50px;
+  display: flex;
+  grid-gap: 50px;
 }

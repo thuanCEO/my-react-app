@@ -145,7 +145,6 @@ export default function Management() {
                             },
                           }}
                           pageSizeOptions={[5, 10]}
-                          checkboxSelection
                         />
                       </div>
                     </div>
