@@ -2,17 +2,17 @@
 
 .container-detail {
   max-width: 60vw;
-  min-height: 80vh;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
 /* Product details box */
 
 .product-details {
-  background-color: #fff; 
+  background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 }
 
@@ -20,7 +20,7 @@
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 
 /* Form groups */
@@ -34,7 +34,7 @@
   font-size: 14px;
   font-weight: 600;
   color: #777;
-  margin-bottom: 5px;  
+  margin-bottom: 5px;
 }
 
 /* Loading message */
@@ -51,7 +51,7 @@
 .table {
   width: 100%;
   margin-top: 30px;
-  border-collapse: collapse;  
+  border-collapse: collapse;
 }
 
 .table th,
@@ -59,7 +59,7 @@
   padding: 15px; /* Tăng kích thước padding */
   text-align: left;
   border-bottom: 1px solid #ddd;
-  color: #555;  
+  color: #555;
 }
 
 .table th {
@@ -93,11 +93,11 @@
 }
 
 .btn-danger {
-  background-color: #dc3545;  
+  background-color: #dc3545;
 }
 
 .btn-danger:hover {
-  background-color: #c82333; 
+  background-color: #c82333;
 }
 
 /* Additional styles for the product info table */
