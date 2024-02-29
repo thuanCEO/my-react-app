@@ -20,14 +20,14 @@ export default function Management() {
     }
   };
 
-  const deleteProduct = (productId) => {
-    const updatedProducts = products.filter(
-      (product) => product.id !== productId
-    );
-    setProducts(updatedProducts);
+  // const deleteProduct = (productId) => {
+  //   const updatedProducts = products.filter(
+  //     (product) => product.id !== productId
+  //   );
+  //   setProducts(updatedProducts);
 
-    console.log(`Details clicked for product with ID: ${productId}`);
-  };
+  //   console.log(`Details clicked for product with ID: ${productId}`);
+  // };
 
   const navigate = useNavigate();
 

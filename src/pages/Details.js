@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Details.css";
 import { BiCommentDetail } from "react-icons/bi";
+import ProductInfoModal from "../components/ProductInfoModal/ProductInfoModal";
 
 export default function Details() {
   const { productId } = useParams();
@@ -26,12 +27,14 @@ export default function Details() {
     fetchData();
   }, [productId]);
 
+  const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
+
   const toggleDetails = (index) => {
     setOpenDetails((prev) => ({
       ...prev,
       [index]: !prev[index],
     }));
-    setShowProductInfo(!showProductInfo); // Khi nhấp vào nút "View Details", hiển thị hoặc ẩn bảng chi tiết sản phẩm
+    setIsProductInfoModalOpen(!isProductInfoModalOpen); // Toggle modal visibility
   };
 
   const orders = [
@@ -115,37 +118,15 @@ export default function Details() {
                         onClick={() => toggleDetails(index)}
                       >
                         <BiCommentDetail />
-                        {/* {openDetails[index] ? "Hide Details" : "View Details"} */}
                       </button>
                     </td>
                   </tr>
-                  {openDetails[index] && showProductInfo && (
-                    <tr>
-                      <td colSpan="5">
-                        <table className="table product-info-table">
-                          <thead>
-                            <tr>
-                              <th>Origin</th>
-                              <th>Manufacturing Place</th>
-                              <th>Product Type</th>
-                              <th>Manufacture Date</th>
-                              <th>Description</th>
-                              <th>Entry Date</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Origin Info</td>
-                              <td>{order.placeOfManufacture}</td>
-                              <td>Product Type Info</td>
-                              <td>Manufacture Date Info</td>
-                              <td>{order.description}</td>
-                              <td>Entry Date Info</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
+                  {openDetails[index] && productDetails && (
+                    <ProductInfoModal
+                      isOpen={openDetails[index]}
+                      onClose={() => toggleDetails(index)}
+                      order={orders[index]}
+                    />
                   )}
                 </React.Fragment>
               ))}
