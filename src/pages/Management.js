@@ -102,7 +102,7 @@ export default function Management() {
 
   return (
     <div className="management-container">
-      <h2 className="management-header">Product Management</h2>
+      <h2 className="mume-header">Product Management</h2>
       <div className="product-input-container">
         <input
           type="text"
@@ -117,40 +117,20 @@ export default function Management() {
       </div>
       <div className="container-fluid">
         <div className="row">
-          {/* Right Content */}
-          <div className="col-lg-10 col-md-9">
-            {/* Top navbar */}
-            <nav
-              className="navbar navbar-top navbar-expand-md navbar-dark"
-              id="navbar-main"
-            >
-              {/* Your existing top navbar content here */}
-            </nav>
-            {/* Page content */}
-            <div className="container mt--7">
-              <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <div className="card p-5">
-                    <div className="mume markdown-preview">
-                      <h2 className="mume-header">Product List</h2>
-
-                      <div className="table-manage-order">
-                        <DataGrid
-                          className="table-manage-order-box"
-                          rows={rows}
-                          columns={columns}
-                          initialState={{
-                            pagination: {
-                              paginationModel: { page: 0, pageSize: 5 },
-                            },
-                          }}
-                          pageSizeOptions={[5, 10]}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="mume markdown-preview">
+            <h2 className="mume-header">Product List</h2>
+            <div className="table-manage-order">
+              <DataGrid
+                className="table-manage-order-box"
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+              />
             </div>
           </div>
         </div>

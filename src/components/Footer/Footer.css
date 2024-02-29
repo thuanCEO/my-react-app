@@ -32,12 +32,12 @@
 
 .footer-box {
   display: flex;
-  grid-gap: 200px;
-  padding-left: 30px;
+  /* grid-gap: 200px; */
+  /* padding-left: 30px; */
   text-align: center;
 }
 
-.address-box {
+/* .address-box {
   display: flex;
   grid-gap: 50px;
-}
+} */
