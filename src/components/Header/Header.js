@@ -36,19 +36,17 @@ export default function Header() {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-md navbar-dark bg-primary navbar-header">
+      <nav className="navbar navbar-expand-md navbar-dark navbar-header">
         <div className="container">
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <button
-              className="login-button-header-menu"
-              onClick={() => setOpen(!open)}
-            >
-              <IoIosMenu className="icon-header" />
-            </button>
-            <button onClick={handleLogin} className="login-button-header">
-              <IoIosLogIn className="icon-header" />
-            </button>
-          </div>
+          <button
+            className="login-button-header-menu"
+            onClick={() => setOpen(!open)}
+          >
+            <IoIosMenu className="icon-header" />
+          </button>
+          <button onClick={handleLogin} className="login-button-header">
+            <IoIosLogIn className="icon-header" />
+          </button>
         </div>
       </nav>
       <Drawer open={open} onClose={() => setOpen(false)}>

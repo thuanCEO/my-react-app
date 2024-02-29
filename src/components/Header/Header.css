@@ -7,13 +7,18 @@
   width: 100%;
 }
 
+.container {
+  width: 100%;
+  margin: 0 !important;
+}
+
 /* Style the navigation bar */
 .navbar {
   /* padding: 5px 0; */
   margin-bottom: 1rem;
 }
 
-.navbar-header{
+.navbar-header {
   background: rgb(92, 91, 91);
 }
 
@@ -34,10 +39,9 @@
   border: rgba(255, 255, 255, 0);
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 50px;
 }
 
-.login-button-header-menu{
+.login-button-header-menu {
   float: left;
   margin: 5px;
   background-color: rgba(255, 255, 255, 0);
@@ -47,7 +51,7 @@
   cursor: pointer;
 }
 
-.login-button-header-menu:hover{
+.login-button-header-menu:hover {
   border: 0.5px solid white;
 }
 
@@ -60,7 +64,6 @@
   font-size: xx-large;
   color: rgb(255, 255, 255);
 }
-
 
 /* Clear the float effect */
 .container {
