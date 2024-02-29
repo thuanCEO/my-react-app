@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import "./Details.css";
 import { BiCommentDetail } from "react-icons/bi";
 import ProductInfoModal from "../components/ProductInfoModal/ProductInfoModal";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function Details() {
   const { productId } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [openDetails, setOpenDetails] = useState({});
-  const [showProductInfo, setShowProductInfo] = useState(false); // State để kiểm soát hiển thị bảng chi tiết sản phẩm
+  const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
+  const [selectedOrderIndex, setSelectedOrderIndex] = useState(null); // New state to track the selected order
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,13 +29,8 @@ export default function Details() {
     fetchData();
   }, [productId]);
 
-  const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
-
   const toggleDetails = (index) => {
-    setOpenDetails((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setSelectedOrderIndex(index - 1); // Update selectedOrderIndex with the clicked row's index
     setIsProductInfoModalOpen(!isProductInfoModalOpen); // Toggle modal visibility
   };
 
@@ -89,52 +86,53 @@ export default function Details() {
     },
   ];
 
+  const columns = [
+    { field: "id", headerName: "ID", width: 60 },
+    { field: "name", headerName: "Name", width: 90 },
+    { field: "description", headerName: "Description", width: 300 },
+    { field: "price", headerName: "Price", width: 90 },
+    {
+      field: "viewDetail",
+      headerName: "View Detail",
+      width: 100,
+      renderCell: (params) => (
+        <button
+          className="btn btn-primary"
+          onClick={() => toggleDetails(params.row.id)}
+        >
+          <BiCommentDetail />
+        </button>
+      ),
+    },
+  ];
+
+  const rows = productDetails
+    ? orders.map((order) => ({ ...order, id: order.id }))
+    : [];
+
   return (
-    <div className="container-detail mt-5">
+    <div className="container-detail mt-3">
       <h2>Order Details</h2>
       {productDetails ? (
-        <div className="product-details">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>View Detail</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <React.Fragment key={index}>
-                  <tr>
-                    <td>{order.id}</td>
-                    <td>{order.name}</td>
-                    <td>{order.description}</td>
-                    <td>{order.price}</td>
-                    <td>
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => toggleDetails(index)}
-                      >
-                        <BiCommentDetail />
-                      </button>
-                    </td>
-                  </tr>
-                  {openDetails[index] && productDetails && (
-                    <ProductInfoModal
-                      isOpen={openDetails[index]}
-                      onClose={() => toggleDetails(index)}
-                      order={orders[index]}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataGrid
+          className="table-manage-order-box"
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5, 10, 20]}
+          autoHeight
+          getRowId={(row) => row.id}
+          // Add other DataGrid options as needed
+        />
       ) : (
         <p className="loading-message">Loading...</p>
+      )}
+      {isProductInfoModalOpen && productDetails && (
+        <ProductInfoModal
+          isOpen={isProductInfoModalOpen}
+          onClose={() => setIsProductInfoModalOpen(false)}
+          order={orders[selectedOrderIndex]} // Assuming productDetails has all necessary info
+        />
       )}
     </div>
   );
