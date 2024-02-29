@@ -1,10 +1,10 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal"; // Import Modal component from Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./ProductInfoModal.css";
 const ProductInfoModal = ({ isOpen, onClose, order }) => {
   return (
-    <Modal show={isOpen} onHide={onClose}>
+    <Modal show={isOpen} onHide={onClose} size="xl">
       <Modal.Header closeButton>
         <Modal.Title>Product Informations</Modal.Title>
       </Modal.Header>
