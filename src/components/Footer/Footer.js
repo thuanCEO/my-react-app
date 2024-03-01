@@ -1,7 +1,7 @@
 // src/components/Footer.js
 import React from "react";
 import "./Footer.css";
-import { Container, Row, Col } from "react-bootstrap"; // Required components from React Bootstrap
+import { Row, Col } from "react-bootstrap"; // Required components from React Bootstrap
 
 export default function Footer() {
   return (
