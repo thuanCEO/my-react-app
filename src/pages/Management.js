@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { BiSolidDetail } from "react-icons/bi";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
-
+import { Row, Col } from "react-bootstrap"; // Import Bootstrap components
 import { Button } from "@mui/material";
 import "./Management.css";
 
@@ -34,11 +34,14 @@ export default function Management() {
   const handleDetailsClick = (productId) => {
     // Implement logic to show product details, e.g., navigate to a details page
     navigate(`/details/${productId}`);
-    console.log(`Details clicked for product with ID: ${productId}`);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "id",
+      headerName: "ID",
+      width: 70,
+    },
     { field: "name", headerName: "Name", width: 130 },
     { field: "price", headerName: "Price", width: 130 },
     {
@@ -85,10 +88,19 @@ export default function Management() {
         );
       },
     },
-  ];
+  ].map((column) => ({
+    ...column, // Giữ lại các thuộc tính ban đầu của cột
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    align: "center",
+  }));
 
   const rows = [
-    { id: 1, name: "Product 1", price: "$19.99" },
+    {
+      id: 1,
+      name: "Product 1",
+      price: "$19.99",
+    },
     { id: 2, name: "Product 2", price: "$29.99" },
     { id: 3, name: "Product 3", price: "$24.99" },
     { id: 4, name: "Product 4", price: "$19.99" },
@@ -119,19 +131,23 @@ export default function Management() {
         <div className="row">
           <div className="mume markdown-preview">
             <h2 className="mume-header">Product List</h2>
-            <div className="table-manage-order">
-              <DataGrid
-                className="table-manage-order-box"
-                rows={rows}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-              />
-            </div>
+            <Row className="justify-content-center">
+              {" "}
+              {/* Center the Datagrid within a row */}
+              <Col>
+                <DataGrid
+                  className="table-manage-order-box "
+                  rows={rows}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                />
+              </Col>
+            </Row>
           </div>
         </div>
       </div>

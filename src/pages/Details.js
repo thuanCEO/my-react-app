@@ -4,11 +4,11 @@ import "./Details.css";
 import { BiCommentDetail } from "react-icons/bi";
 import ProductInfoModal from "../components/ProductInfoModal/ProductInfoModal";
 import { DataGrid } from "@mui/x-data-grid";
+import { Row, Col } from "react-bootstrap"; // Import Bootstrap components
 
 export default function Details() {
   const { productId } = useParams();
   const [productDetails, setProductDetails] = useState(null);
-  const [openDetails, setOpenDetails] = useState({});
   const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
   const [selectedOrderIndex, setSelectedOrderIndex] = useState(null); // New state to track the selected order
 
@@ -104,7 +104,12 @@ export default function Details() {
         </button>
       ),
     },
-  ];
+  ].map((column) => ({
+    ...column, // Giữ lại các thuộc tính ban đầu của cột
+    headerClassName: "super-app-theme--header",
+    headerAlign: "center",
+    align: "center",
+  }));
 
   const rows = productDetails
     ? orders.map((order) => ({ ...order, id: order.id }))
@@ -114,16 +119,26 @@ export default function Details() {
     <div className="container-detail mt-3">
       <h2>Order Details</h2>
       {productDetails ? (
-        <DataGrid
-          className="table-manage-order-box"
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5, 10, 20]}
-          autoHeight
-          getRowId={(row) => row.id}
-          // Add other DataGrid options as needed
-        />
+        <Row className="justify-content-center">
+          {" "}
+          {/* Center the Datagrid within a row */}
+          <Col>
+            {" "}
+            {/* Adjust column widths as needed */}
+            <DataGrid
+              className="table-manage-order-box"
+              rows={rows}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              getRowId={(row) => row.id}
+            />
+          </Col>
+        </Row>
       ) : (
         <p className="loading-message">Loading...</p>
       )}

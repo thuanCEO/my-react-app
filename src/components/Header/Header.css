@@ -8,8 +8,9 @@
 }
 
 .container {
-  width: 100%;
+  min-width: 98%;
   margin: 0 !important;
+  overflow: hidden;
 }
 
 /* Style the navigation bar */
@@ -63,11 +64,6 @@
 .icon-header {
   font-size: xx-large;
   color: rgb(255, 255, 255);
-}
-
-/* Clear the float effect */
-.container {
-  overflow: hidden;
 }
 
 /* Add some top padding to the page content to prevent sudden quick movement */

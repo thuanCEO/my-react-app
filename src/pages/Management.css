@@ -105,17 +105,22 @@ body {
   color: #ffffff;
 }
 
-.table-manage-order {
-  max-width: fit-content;
-}
 .table-manage-order-box {
   background: transparent;
   background-color: white;
   border: 2px solid rgba(95, 92, 92, 0.2);
   backdrop-filter: blur(9px);
   border-radius: 12px;
+  max-width: fit-content;
 }
 
 .icon-table {
   font-size: large;
+}
+
+.super-app-theme--header div {
+  font-weight: bold;
+}
+.super-app-theme--cell {
+  text-align: center;
 }
