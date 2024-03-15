@@ -132,21 +132,17 @@ export default function Management() {
           <div className="mume markdown-preview">
             <h2 className="mume-header">Product List</h2>
             <Row className="justify-content-center">
-              {" "}
-              {/* Center the Datagrid within a row */}
-              <Col>
-                <DataGrid
-                  className="table-manage-order-box "
-                  rows={rows}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 5 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
-                />
-              </Col>
+              <DataGrid
+                className="table-manage-order-box "
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5, 10]}
+              />
             </Row>
           </div>
         </div>
