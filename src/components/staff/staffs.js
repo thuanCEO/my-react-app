@@ -1,4 +1,3 @@
-// src/components/Management.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
@@ -7,8 +6,8 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
-import AxiosClient from "../api/axiosClient"; // Import AxiosClient for API calls
-import "./Management.css";
+import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
+import "./staffs.css";
 
 export default function Management() {
   const [products, setProducts] = useState([]);
@@ -61,7 +60,7 @@ export default function Management() {
   };
 
   const handleDetailsClick = (productId) => {
-    navigate(`/details/${productId}`);
+    navigate(`/ordersID/${productId}`);
   };
 
   const columns = [

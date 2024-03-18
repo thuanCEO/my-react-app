@@ -8,6 +8,7 @@
     background: linear-gradient(rgb(44, 224, 224), rgba(0, 102, 255, 0.537), skyblue);
     background-size: cover;
     background-position: center;
+    margin-top: 0px;;
 }
 
 .login-box {
@@ -71,4 +72,15 @@
   font-size: 16px;
   color: #333;
   font-weight: 600;
+}
+
+.registration, .password-recovery {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  text-align: center; /* Center text horizontally */
+}
+.registration a{
+  text-decoration: none;
+  font-size: smaller; /* Make the text smaller */
 }
