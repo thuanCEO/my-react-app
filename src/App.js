@@ -5,24 +5,29 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import Header from "./components/common/Header/Header";
+import Footer from "./components/common/Footer/Footer";
 import Login from "./components/Login/Login";
-import Management from "./pages/Management";
-import Details from "./pages/Details";
+import SignUp from './components/SignUp/SignUp';
+import Admin from './components/admin/admin';
+import Managements from "./components/management/managements";
+import Staffs from './components/staff/staffs';
+import OrderDetails from './pages/Order/ordersDetails';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Tạo một component để hiển thị header nếu đường dẫn khác '/'
+
+
 export const ShowHeader = () => {
   const location = useLocation();
-  if (location.pathname !== "/") return <Header />;
+  if (location.pathname !== "/" && location.pathname !== "/signUp") return <Header />;
   else return <></>;
 };
 
-// Tạo một component tương tự để hiển thị footer
+
 export const ShowFooter = () => {
   const location = useLocation();
-  if (location.pathname !== "/") return <Footer />;
+  if (location.pathname !== "/" && location.pathname !== "/signUp") return <Footer />;
   else return <></>;
 };
 
@@ -32,8 +37,14 @@ export default function App() {
       <ShowHeader />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/management" element={<Management />} />
-        <Route path="/details/:productId" element={<Details />} />
+        <Route path="/admin" element={<Admin/>} />
+        <Route path="/managements" element={<Managements />} />
+        <Route path="/staffs" element={<Staffs />} />
+        <Route path="/signUp" element={<SignUp/>} />
+        <Route path="/ordersID/:productId" element={<OrderDetails />} />
+
+
+        
       </Routes>
       <ShowFooter />
     </Router>

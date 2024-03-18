@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./Details.css";
+import "./ordersDetails.css";
 import { BiCommentDetail } from "react-icons/bi";
-import ProductInfoModal from "../components/ProductInfoModal/ProductInfoModal";
+import ProductInfoModal from "../ProductInfoModal/ProductInfoModal";
 import { DataGrid } from "@mui/x-data-grid";
 import { Row, Col } from "react-bootstrap"; // Import Bootstrap components
 

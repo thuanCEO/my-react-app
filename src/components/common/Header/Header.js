@@ -20,7 +20,6 @@ export default function Header() {
 
   // Tạo một hàm để xử lý sự kiện khi nhấn nút
   const handleLogin = () => {
-    // Chuyển hướng người dùng đến trang đăng nhập
     navigate("/");
   };
   const handleListItemClick = (index) => {
