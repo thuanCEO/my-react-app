@@ -2,23 +2,24 @@ import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { FaRegUserCircle, FaLock } from "react-icons/fa";
+import axiosClient from '../../api/axiosClient'; // Import axiosClient for API calls
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Simulate server-side authentication
-    if (username.trim() === 'admin' && password.trim() === '123') {
+  const handleLogin = async () => { // Sử dụng async function để gọi API
+    try {
+      const response = await axiosClient.post('/api/Users/login', { email, password }); // Gửi yêu cầu đăng nhập với email và password
       console.log('Login successful');
       setErrorMessage('');
       // Redirect to the manager page
       navigate('/management');
-    } else {
-      console.log('Login failed');
-      setErrorMessage('Invalid username or password');
+    } catch (error) {
+      console.error('Login failed', error);
+      setErrorMessage('Invalid email or password'); // Thông báo lỗi cho người dùng
     }
   };
 
@@ -28,12 +29,12 @@ export default function Login() {
         <h1 className="login-title">Login</h1>
         <form className="login-form">
           <div className="login-input-group">
-            <input placeholder='Username' type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="login-input" />
-            <FaRegUserCircle  className="icon"/>
+            <input placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="login-input" /> {/* Thay đổi input type thành email */}
+            <FaRegUserCircle className="icon" />
           </div>
           <div className="login-input-group">
             <input placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
-            <FaLock className="icon"/>
+            <FaLock className="icon" />
           </div>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <div className="login-button-group">
@@ -46,4 +47,3 @@ export default function Login() {
     </div>
   );
 };
-

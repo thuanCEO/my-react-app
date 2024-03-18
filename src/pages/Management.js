@@ -1,49 +1,77 @@
 // src/components/Management.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { BiSolidDetail } from "react-icons/bi";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
-import { Row, Col } from "react-bootstrap"; // Import Bootstrap components
+import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
+import AxiosClient from "../api/axiosClient"; // Import AxiosClient for API calls
 import "./Management.css";
 
 export default function Management() {
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
+  const navigate = useNavigate();
 
-  const addProduct = () => {
+  useEffect(() => {
+    // Call API to fetch products on component mount
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await AxiosClient.get("/api/Product");
+      const productsWithId = response.data.map((product, index) => ({
+        ...product,
+        id: index + 1, // Generate a unique id for each product
+      }));
+      setProducts(productsWithId);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+  
+
+  const addProduct = async () => {
     if (productName.trim() !== "") {
-      setProducts([...products, { id: Date.now(), name: productName }]);
-      setProductName("");
+      try {
+        const response = await AxiosClient.post("/api/Product", {
+          productName: productName,
+        });
+        setProducts([...products, response.data]);
+        setProductName("");
+      } catch (error) {
+        console.error("Error adding product:", error);
+      }
     }
   };
 
-  // const deleteProduct = (productId) => {
-  //   const updatedProducts = products.filter(
-  //     (product) => product.id !== productId
-  //   );
-  //   setProducts(updatedProducts);
-
-  //   console.log(`Details clicked for product with ID: ${productId}`);
-  // };
-
-  const navigate = useNavigate();
+  const deleteProduct = async (productId) => {
+    try {
+      await AxiosClient.delete(`/api/Product/${productId}`);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId
+      );
+      setProducts(updatedProducts);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
 
   const handleDetailsClick = (productId) => {
-    // Implement logic to show product details, e.g., navigate to a details page
     navigate(`/details/${productId}`);
   };
 
   const columns = [
     {
-      field: "id",
+      field: "Id",
       headerName: "ID",
       width: 70,
     },
-    { field: "name", headerName: "Name", width: 130 },
-    { field: "price", headerName: "Price", width: 130 },
+    { field: "ProductName", headerName: "Product Name", width: 130 },
+    { field: "Price", headerName: "Price", width: 130 },
     {
       field: "detail",
       headerName: "Detail",
@@ -81,36 +109,23 @@ export default function Management() {
       sortable: false,
       width: 90,
       renderCell: (params) => {
+        const onDelete = () => {
+          deleteProduct(params.row.id);
+        };
+
         return (
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={onDelete}>
             <MdDeleteOutline className="icon-table" />
           </Button>
         );
       },
     },
   ].map((column) => ({
-    ...column, // Giữ lại các thuộc tính ban đầu của cột
+    ...column,
     headerClassName: "super-app-theme--header",
     headerAlign: "center",
     align: "center",
   }));
-
-  const rows = [
-    {
-      id: 1,
-      name: "Product 1",
-      price: "$19.99",
-    },
-    { id: 2, name: "Product 2", price: "$29.99" },
-    { id: 3, name: "Product 3", price: "$24.99" },
-    { id: 4, name: "Product 4", price: "$19.99" },
-    { id: 5, name: "Product 5", price: "$29.99" },
-    { id: 6, name: "Product 6", price: "$24.99" },
-    { id: 7, name: "Product 7", price: "$19.99" },
-    { id: 8, name: "Product 8", price: "$29.99" },
-    { id: 9, name: "Product 9", price: "$24.99" },
-    { id: 10, name: "Product 1", price: "$19.99" },
-  ];
 
   return (
     <div className="management-container">
@@ -132,19 +147,13 @@ export default function Management() {
           <div className="mume markdown-preview">
             <h2 className="mume-header">Product List</h2>
             <Row className="justify-content-center">
-              {" "}
-              {/* Center the Datagrid within a row */}
               <Col>
                 <DataGrid
-                  className="table-manage-order-box "
-                  rows={rows}
+                  className="table-manage-order-box"
+                  rows={products}
                   columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: { page: 0, pageSize: 5 },
-                    },
-                  }}
-                  pageSizeOptions={[5, 10]}
+                  pageSize={5}
+                  pagination
                 />
               </Col>
             </Row>

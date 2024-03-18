@@ -10,6 +10,7 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
 import Management from "./pages/Management";
 import Details from "./pages/Details";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // Tạo một component để hiển thị header nếu đường dẫn khác '/'
 export const ShowHeader = () => {

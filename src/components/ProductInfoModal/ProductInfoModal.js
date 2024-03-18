@@ -4,12 +4,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductInfoModal.css";
 const ProductInfoModal = ({ isOpen, onClose, order }) => {
   return (
-    <Modal show={isOpen} onHide={onClose} size="xl">
+    <Modal show={isOpen}
+    onHide={onClose}
+    size="xl"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered>
       <Modal.Header closeButton>
         <Modal.Title>Product Informations</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <table className="table product-info-table">
+      <table className="table product-info-table-modal">
           <thead>
             <tr>
               <th>Origin</th>
