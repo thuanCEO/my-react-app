@@ -1,4 +1,3 @@
-// src/components/Header.js
 import React, { useState } from "react";
 import "./Header.css";
 import { IoIosLogIn, IoIosMenu } from "react-icons/io";
