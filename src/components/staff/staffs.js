@@ -11,7 +11,6 @@ import "./staffs.css";
 
 export default function Staff() {
   const [orders, setOrders] = useState([]);
-  const [productName, setProductName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,34 +33,23 @@ export default function Staff() {
   };
   
 
-  const addProduct = async () => {
-    if (productName.trim() !== "") {
-      try {
-        const response = await AxiosClient.post("/api/Product", {
-          productName: productName,
-        });
-        setOrders([...orders, response.data]);
-        setProductName("");
-      } catch (error) {
-        console.error("Error adding product:", error);
-      }
-    }
-  };
 
-  const deleteProduct = async (productId) => {
+
+  const deleteOrders = async (orderId) => {
     try {
-      await AxiosClient.delete(`/api/Product/${productId}`);
-      const updatedProducts = orders.filter(
-        (product) => product.id !== productId
+      await AxiosClient.delete(`/api/Orders/${orderId}`);
+      const updatedOrders = orders.filter(
+        (orders) => orders.id !== orderId
       );
-      setOrders(updatedProducts);
+      setOrders(updatedOrders);
+      fetchOrders();
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error deleting orders:", error);
     }
   };
 
-  const handleDetailsClick = (productId) => {
-    navigate(`/ordersID/${productId}`);
+  const handleDetailsClick = (orderId) => {
+    navigate(`/ordersID/${orderId}`);
   };
 
   const columns = [
@@ -84,7 +72,7 @@ export default function Staff() {
       renderCell: (params) => {
         const onClick = (e) => {
           e.stopPropagation();
-          handleDetailsClick(params.row.id);
+          handleDetailsClick(params.row.Id);
         };
 
         return (
@@ -114,7 +102,7 @@ export default function Staff() {
       width: 90,
       renderCell: (params) => {
         const onDelete = () => {
-          deleteProduct(params.row.id);
+          deleteOrders(params.row.Id);
         };
 
         return (
