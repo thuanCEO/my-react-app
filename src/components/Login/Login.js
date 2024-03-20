@@ -30,7 +30,7 @@ export default function Login() {
       }
     
      
-    } catch (error) {
+    } catch (error) { 
       console.error('Login failed', error);
       setErrorMessage('Invalid email or password'); 
     }
