@@ -1,6 +1,6 @@
 /* src/components/Login.css *//* src/components/Management.css */
 .management-container {
-    max-width: 60vw;
+    max-width: 100%;
     min-height: 100vh;
     margin: 0 auto;
   }
