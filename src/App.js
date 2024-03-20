@@ -11,6 +11,7 @@ import Login from "./components/Login/Login";
 import Management from "./pages/Management";
 import Details from "./pages/Details";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./components/home/home";
 
 // Tạo một component để hiển thị header nếu đường dẫn khác '/'
 export const ShowHeader = () => {
@@ -33,6 +34,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/management" element={<Management />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/details/:productId" element={<Details />} />
       </Routes>
       <ShowFooter />

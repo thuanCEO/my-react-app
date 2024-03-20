@@ -126,6 +126,6 @@ body {
 }
 
 .justify-content-center {
-  margin: auto !important;
+  margin: 0 auto !important;
   width: fit-content;
 }

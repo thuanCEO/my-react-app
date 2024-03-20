@@ -24,11 +24,18 @@ export default function Header() {
     navigate("/");
   };
   const handleListItemClick = (index) => {
-    if (index === 1) {
-      // Check for the "Product Management" item
-      navigate("/management"); // Navigate to the management route
-    } else {
-      // Handle navigation for other items if needed
+    switch (index) {
+      case 0:
+        // Navigate to the home route
+        navigate("/home");
+        break;
+      case 1:
+        // Navigate to the management route
+        navigate("/management");
+        break;
+      default:
+        // Handle other cases (optional)
+        console.warn("Unhandled list item index:", index);
     }
   };
 
