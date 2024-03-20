@@ -16,12 +16,20 @@ export default function Login() {
       const response = await axiosClient.post('/api/Users/login', { email, password }); 
       console.log('Login successful');
       setErrorMessage('');
-   
-   //   navigate('/managements');   {/* role managements */}
-
-   //   navigate('/staffs');   {/* role managements */}
-
-     navigate('/admin');   {/* role admin */}
+      const { role } = response.data;
+       if(role === 3) //role 1= admin
+      {
+        navigate('/admin'); 
+      }
+      if(role === 2){ // role 2 = managements
+        navigate('/managements');
+      }
+      if(role === 1) //role 3 = staff
+      {
+        navigate('/staffs');
+      }
+    
+     
     } catch (error) {
       console.error('Login failed', error);
       setErrorMessage('Invalid email or password'); 

@@ -10,13 +10,10 @@ export default function SignUp() {
     const [phone, setPhone] = useState('');
     const [fullName, setFullName] = useState('');
     const [description, setDescription] = useState('');
-
     const [errorMessage, setErrorMessage] = useState('');
-
-
+ 
     const handleSignUp = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        
+        e.preventDefault(); 
         try {
             const response = await axiosClient.post('/api/Users/signup', {
                 email,
@@ -25,8 +22,6 @@ export default function SignUp() {
                 phone,
                 address,
                 description,
-             
-
             });
 
         } catch (error) {

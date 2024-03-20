@@ -9,24 +9,25 @@ import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./staffs.css";
 
-export default function Management() {
-  const [products, setProducts] = useState([]);
+export default function Staff() {
+  const [orders, setOrders] = useState([]);
   const [productName, setProductName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Call API to fetch products on component mount
-    fetchProducts();
+
+    fetchOrders();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchOrders = async () => {
     try {
-      const response = await AxiosClient.get("/api/Product");
-      const productsWithId = response.data.map((product, index) => ({
-        ...product,
-        id: index + 1, // Generate a unique id for each product
+      const response = await AxiosClient.get("/api/Orders");
+      console.log(response);
+      const productsWithId = response.data.map((orders, index) => ({
+        ...orders,
+        id: index + 1, 
       }));
-      setProducts(productsWithId);
+      setOrders(productsWithId);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -39,7 +40,7 @@ export default function Management() {
         const response = await AxiosClient.post("/api/Product", {
           productName: productName,
         });
-        setProducts([...products, response.data]);
+        setOrders([...orders, response.data]);
         setProductName("");
       } catch (error) {
         console.error("Error adding product:", error);
@@ -50,10 +51,10 @@ export default function Management() {
   const deleteProduct = async (productId) => {
     try {
       await AxiosClient.delete(`/api/Product/${productId}`);
-      const updatedProducts = products.filter(
+      const updatedProducts = orders.filter(
         (product) => product.id !== productId
       );
-      setProducts(updatedProducts);
+      setOrders(updatedProducts);
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -66,11 +67,15 @@ export default function Management() {
   const columns = [
     {
       field: "Id",
-      headerName: "ID",
+      headerName: "No",
       width: 70,
     },
-    { field: "ProductName", headerName: "Product Name", width: 130 },
-    { field: "Price", headerName: "Price", width: 130 },
+    { field: "MachineId", headerName: "MachineID", width: 130 },
+    { field: "StoreId", headerName: "StoreID", width: 130 },
+    { field: "OrderImageId", headerName: "OrderImageID", width: 130 },
+    { field: "TotalPrice", headerName: "Price", width: 130 },
+    { field: "Status", headerName: "Status", width: 130 },
+    { field: "CreationDate", headerName: "Date", width: 130 },
     {
       field: "detail",
       headerName: "Detail",
@@ -128,28 +133,15 @@ export default function Management() {
 
   return (
     <div className="management-container">
-      <h2 className="mume-header">Product Management</h2>
-      <div className="product-input-container">
-        <input
-          type="text"
-          placeholder="Enter product name"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          className="product-input"
-        />
-        <button onClick={addProduct} className="add-button">
-          Add Product
-        </button>
-      </div>
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
-            <h2 className="mume-header">Product List</h2>
+            <h2 className="mume-header">Orders List</h2>
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
                   className="table-manage-order-box"
-                  rows={products}
+                  rows={orders}
                   columns={columns}
                   pageSize={5}
                   pagination
