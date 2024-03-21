@@ -1,0 +1,89 @@
+/* src/components/Login.css */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(rgb(44, 224, 224), rgba(0, 102, 255, 0.537), skyblue);
+  background-size: cover;
+  background-position: center;
+  margin-top: 0px;;
+}
+
+.login-box {
+width: 420px;
+background: transparent;
+background-color: rgba(160, 156, 156, 0.338);
+border: 2px solid rgba(160, 156, 156, 0.2);
+backdrop-filter: blur(9px);
+color: #fff;
+border-radius: 12px;
+padding: 30px 40px;
+}
+
+.login-box .login-title {
+font-size: 36px;
+text-align: center;
+}
+
+.login-box .login-input-group {
+position: relative;
+width: 100%;
+height: 50px;
+margin: 30px 0;
+}
+
+.login-input-group .login-input {
+width: 100%;
+height: 50%;
+background: transparent;
+border: none;
+outline: none;
+border: 2px solid rgba(255, 255, 255, .2);
+border-radius: 40px;
+font-size: 16px;
+color: #fff;
+padding: 20px 45px 20px 20px;
+}
+
+.login-input-group .login-input::placeholder {
+color: #fff;
+}
+
+.login-input-group .icon {
+position: absolute;
+right: 0px;
+top: 20%;
+transform: translate(-50%);
+font-size: 20px;
+
+}
+
+.login-box .login-button {
+width: 100%;
+height: 45px;
+background: #fff;
+border: none;
+outline: none;
+border-radius: 40px;
+box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+cursor: pointer;
+font-size: 16px;
+color: #333;
+font-weight: 600;
+}
+
+.registration, .password-recovery {
+display: flex;
+flex-direction: column;
+align-items: center; /* Center content horizontally */
+text-align: center; /* Center text horizontally */
+}
+.registration a{
+text-decoration: none;
+font-size: smaller; /* Make the text smaller */
+}
+.error-message{
+color: red;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./../styles/Header.css";
-import { IoIosLogIn, IoIosMenu, IoIosBusiness } from "react-icons/io";
+import { IoIosLogIn, IoIosMenu, IoIosBusiness, IoIosCloud } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +36,9 @@ export default function Header() {
   const handleClickAdmin = () => {
     navigate("/admin");
   };
+  const handleClickAdminCreateUser = () => {
+    navigate("/createsAccountManagements");
+  };
 
   const handleLogin = () => {
     sessionStorage.removeItem("role");
@@ -55,6 +58,15 @@ export default function Header() {
             <FaHome className="icon-header" />
             <div className="header-name">Home</div>
           </button>
+          )}
+           {role === 1 && (
+            <button
+              className="login-button-header-menu"
+              onClick={handleClickAdminCreateUser}
+            >
+              <IoIosCloud className="icon-header" />
+              <div className="header-name">Create Accounts Management</div>
+            </button>
           )}
             {(role === 2) && (
           <button
