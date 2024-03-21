@@ -11,7 +11,6 @@ export default function Details() {
   const { orderId } = useParams(); 
   const [orderDetails, setOrderDetails] = useState(null);
   const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
-  const [selectedOrderIndex, setSelectedOrderIndex] = useState(null); 
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -27,7 +26,7 @@ export default function Details() {
   }, [orderId]);
 
   const toggleDetails = (index) => {
-    setSelectedOrderIndex(index - 1); 
+
     setIsProductInfoModalOpen(!isProductInfoModalOpen);
   };
 

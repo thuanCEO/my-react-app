@@ -17,14 +17,15 @@ export default function Login() {
       console.log('Login successful');
       setErrorMessage('');
       const { role } = response.data;
-       if(role === 3) //role 1= admin
+      sessionStorage.setItem('role', role);
+       if(role === 1) //role 1= admin
       {
         navigate('/admin'); 
       }
       if(role === 2){ // role 2 = managements
         navigate('/managements');
       }
-      if(role === 1) //role 3 = staff
+      if(role === 3) //role 3 = staff
       {
         navigate('/staffs');
       }
