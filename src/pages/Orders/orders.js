@@ -14,6 +14,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [totalOrders, setTotalOrders] = useState(0);
   const [role, setUserRole] = useState(0);
   useEffect(() => {
@@ -44,9 +45,6 @@ export default function Orders() {
       console.error("Error fetching products:", error);
     }
   };
-  
-
-
 
   const deleteOrders = async (orderId) => {
     try {
