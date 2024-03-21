@@ -84,3 +84,6 @@
   text-decoration: none;
   font-size: smaller; /* Make the text smaller */
 }
+.error-message{
+  color: red;
+}

@@ -18,6 +18,8 @@ import AccountUser from './pages/Accounts/accountUser';
 import Products from './pages/Products/products';
 import Orders from "./pages/Orders/orders";
 
+import CreateUserByAdmin from './components/admin/components/CreateAccounts';
+
 import DetailsUser from './components/admin/components/detailsUsersByAdmin';
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,6 +53,8 @@ export default function App() {
         <Route path="/managementAccountUser" element={<AccountUser/>} />
         <Route path="/managementProducts" element={<Products/>} />
         <Route path="/managementOrders" element={<Orders/>} />
+
+        <Route path="/createsAccountManagements" element={<CreateUserByAdmin/>} />
 
         <Route path="/detailsID/:userID" element={<DetailsUser />} />
         <Route path="/ordersID/:productId" element={<OrderDetails />} />
