@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./ordersDetails.css";
+import "./../../components/common/styles/ordersDetails.css";
 import { BiCommentDetail } from "react-icons/bi";
 import ProductInfoModal from "../ProductInfoModal/ProductInfoModal";
 import { DataGrid } from "@mui/x-data-grid";
 import { Row, Col } from "react-bootstrap"; 
+import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 
 export default function Details() {
-  const { orderId } = useParams(); // Use orderId instead of productId
+  const { orderId } = useParams(); 
   const [orderDetails, setOrderDetails] = useState(null);
   const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
   const [selectedOrderIndex, setSelectedOrderIndex] = useState(null); 
@@ -15,13 +16,8 @@ export default function Details() {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        // Replace this with your API call to fetch order details by ID
-        // For example:
-        // const response = await AxiosClient.get(`/api/orders/${orderId}`);
-        // setOrderDetails(response.data);
-        // Simulating data fetching
-        const details = orders.find(order => order.id === Number(orderId));
-        setOrderDetails(details);
+        const response = await AxiosClient.get(`/api/Orders/${orderId}`);
+        setOrderDetails(response.data);
       } catch (error) {
         console.error("Error fetching order details:", error);
       }
@@ -34,9 +30,6 @@ export default function Details() {
     setSelectedOrderIndex(index - 1); 
     setIsProductInfoModalOpen(!isProductInfoModalOpen);
   };
-
-  // Assuming you have orders data here
-  const orders = [/* Your orders data array */];
 
   const columns = [
     { field: "id", headerName: "ID", width: 60 },
@@ -63,7 +56,7 @@ export default function Details() {
     align: "center",
   }));
 
-  const rows = orderDetails ? orders.map((order) => ({ ...order, id: order.id })) : [];
+  const rows = orderDetails ? [orderDetails] : [];
 
   return (
     <div className="container-detail mt-3">
@@ -92,7 +85,7 @@ export default function Details() {
         <ProductInfoModal
           isOpen={isProductInfoModalOpen}
           onClose={() => setIsProductInfoModalOpen(false)}
-          order={orders[selectedOrderIndex]}
+          order={orderDetails}
         />
       )}
     </div>

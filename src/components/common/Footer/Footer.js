@@ -1,6 +1,6 @@
 // src/components/Footer.js
 import React from "react";
-import "./Footer.css";
+import "./../styles/Footer.css";
 import { Row, Col } from "react-bootstrap"; // Required components from React Bootstrap
 import logo_website from '../img/logo/3.png';
 export default function Footer() {

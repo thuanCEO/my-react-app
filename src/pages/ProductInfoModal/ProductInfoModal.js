@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal"; // Import Modal component from Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./ProductInfoModal.css";
+import "./../../components/common/styles/ProductInfoModal.css";
 const ProductInfoModal = ({ isOpen, onClose, order }) => {
   return (
     <Modal show={isOpen}

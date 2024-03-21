@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AxiosClient from "../../../api/axiosClient";
-import "./detailsUsersByAdmin.css";
+import "./../../common/styles/detailsUsersByAdmin.css";
 
 export default function DetailsUsers({ userID }) {
   const [user, setUser] = useState(null);

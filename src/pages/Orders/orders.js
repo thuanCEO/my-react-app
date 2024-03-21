@@ -6,52 +6,51 @@ import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
-import AxiosClient from "../../api/axiosClient"; 
-import "./../common/styles/admin.css";
+import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
+import "./../../components/common/styles/orders.css";
+import { IoIosCheckbox } from "react-icons/io";
 
-export default function Admin() {
-  const [users, setUser] = useState([]);
-
+export default function Orders() {
+  const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-   
-    fetchUsers();
+
+    fetchOrders();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchOrders = async () => {
     try {
-      const response = await AxiosClient.get("/api/Users");
-      const ordersWithId = response.data.map((orders, index) => ({
+      const response = await AxiosClient.get("/api/Orders");
+      console.log(response);
+      const productsWithId = response.data.map((orders, index) => ({
         ...orders,
         id: index + 1, 
       }));
-      setUser(ordersWithId);
+      setOrders(productsWithId);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
-
-// Add Users
-
+  
 
 
-// Delete Users -> delete from database
-const deleteUsers = async (Id) => {
-  try {
-    await AxiosClient.delete(`/api/Users/${Id}`); 
-    const updatedUsers = users.filter(
-      (user) => user.Id !== Id 
-    );
-    setUser(updatedUsers);
-  } catch (error) {
-    console.error("Error deleting user:", error);
-  }
-};
 
-  // Details user
-  const handleDetailsClick = (userID) => {
-    navigate(`/detailsID/${userID}`);
+  const deleteOrders = async (orderId) => {
+    try {
+      await AxiosClient.delete(`/api/Orders/${orderId}`);
+      const updatedOrders = orders.filter(
+        (orders) => orders.id !== orderId
+      );
+      setOrders(updatedOrders);
+      fetchOrders();
+    } catch (error) {
+      console.error("Error deleting orders:", error);
+    }
+  };
+
+  const handleDetailsClick = (orderId) => {
+    navigate(`/ordersID/${orderId}`);
   };
 
   const columns = [
@@ -60,21 +59,28 @@ const deleteUsers = async (Id) => {
       headerName: "No",
       width: 70,
     },
-    { field: "FullName", headerName: "Full Name", width: 140 },
-    { field: "Email", headerName: "Email", width: 330 },
-    { field: "Password", headerName: "Password", width: 160 },
-    { field: "PhoneNumber", headerName: "Phone", width: 140 },
+    { field: "MachineId", headerName: "MachineID", width: 130 },
+    { field: "StoreId", headerName: "StoreID", width: 130 },
+    { field: "OrderImageId", headerName: "OrderImageID", width: 130 },
+    { field: "TotalPrice", headerName: "Price", width: 130 },
+    { field: "CreationDate", headerName: "Date", width: 130 },
+    { field: "Status", renderCell: (params) => {
+      if (params.row.Status === 1) {
+        return ( <IoIosCheckbox className="icon-table" /> );
+      } else if (params.row.Status === 2) {
+        return null; 
+      }
+    } },
     {
       field: "detail",
       headerName: "Detail",
       sortable: false,
-      width: 80,
+      width: 90,
       renderCell: (params) => {
         const onClick = (e) => {
           e.stopPropagation();
-          handleDetailsClick(params.row.id);
+          handleDetailsClick(params.row.Id);
         };
-
         return (
           <Button variant="contained" color="primary" onClick={onClick}>
             <BiSolidDetail className="icon-table" />
@@ -86,7 +92,7 @@ const deleteUsers = async (Id) => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      width: 80,
+      width: 90,
       renderCell: (params) => {
         return (
           <Button variant="contained" color="primary">
@@ -102,7 +108,7 @@ const deleteUsers = async (Id) => {
       width: 90,
       renderCell: (params) => {
         const onDelete = () => {
-          deleteUsers(params.row.Id);
+          deleteOrders(params.row.Id);
         };
 
         return (
@@ -120,17 +126,18 @@ const deleteUsers = async (Id) => {
   }));
 
   return (
-    <div className="admin-container">
+    <div className="management-container">
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
+            <h2 className="mume-header">Orders List</h2>
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
                   className="table-manage-order-box"
-                  rows={users}
+                  rows={orders}
                   columns={columns}
-                  pageSize={10}
+                  pageSize={5}
                   pagination
                 />
               </Col>
