@@ -13,11 +13,23 @@ import { IoIosCheckbox } from "react-icons/io";
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [role, setUserRole] = useState(0);
   useEffect(() => {
-
     fetchOrders();
+    const roleFromSession = sessionStorage.getItem("role");
+    if (roleFromSession) {
+      setUserRole(parseInt(roleFromSession));
+    }
   }, []);
+  useEffect(() => {
+    const totalPrice = orders.reduce((total, order) => total + order.TotalPrice, 0);
+    setTotalPrice(totalPrice);
+
+    const totalOrders = orders.length;
+    setTotalOrders(totalOrders);
+  }, [orders]);
 
   const fetchOrders = async () => {
     try {
@@ -107,15 +119,19 @@ export default function Orders() {
       sortable: false,
       width: 90,
       renderCell: (params) => {
-        const onDelete = () => {
-          deleteOrders(params.row.Id);
-        };
+        if (role === 2) {
+          const onDelete = () => {
+            deleteOrders(params.row.Id);
+          };
 
-        return (
-          <Button variant="contained" color="error" onClick={onDelete}>
-            <MdDeleteOutline className="icon-table" />
-          </Button>
-        );
+          return (
+            <Button variant="contained" color="error" onClick={onDelete}>
+              <MdDeleteOutline className="icon-table" />
+            </Button>
+          );
+        } else {
+          return null;
+        }
       },
     },
   ].map((column) => ({
@@ -130,9 +146,9 @@ export default function Orders() {
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
-            <h2 className="mume-header">Orders List</h2>
             <Row className="justify-content-center">
               <Col>
+              <h2>Total Price: {totalPrice}</h2>
                 <DataGrid
                   className="table-manage-order-box"
                   rows={orders}

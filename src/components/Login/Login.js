@@ -16,8 +16,17 @@ export default function Login() {
       const response = await axiosClient.post('/api/Users/login', { email, password }); 
       console.log('Login successful');
       setErrorMessage('');
-      const { role } = response.data;
+    
+      const userData = response.data;
+      console.log('User data:', userData); // Log user data to check the structure
+      
+      // Extract and store user data in session storage
+      const { role, fullname, gemail } = userData;
+      sessionStorage.setItem('userData', JSON.stringify(userData)); 
       sessionStorage.setItem('role', role);
+      sessionStorage.setItem('fullname', fullname);
+      sessionStorage.setItem('gemail', gemail);
+
        if(role === 1) //role 1= admin
       {
         navigate('/admin'); 
@@ -29,7 +38,6 @@ export default function Login() {
       {
         navigate('/staffs');
       }
-    
      
     } catch (error) { 
       console.error('Login failed', error);

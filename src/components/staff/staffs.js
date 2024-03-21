@@ -1,144 +1,96 @@
+import "./../common/styles/home.css";
+import {
+  DollarCircleOutlined,
+  ProductFilled,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { Card, Space, Statistic, Typography } from "antd";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
-import { BiSolidDetail } from "react-icons/bi";
-import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
-import { Row, Col } from "react-bootstrap";
-import { Button } from "@mui/material";
-import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
-import "./../common/styles/staffs.css";
+import AxiosClient from "../../api/axiosClient";
+function DashboardCard({ title, value, icon }) {
+  return (
+    <Card>
+      <Space direction="horizontal">
+        {icon}
+        <Statistic title={title} value={value} />
+      </Space>
+    </Card>
+  );
+}
 
 export default function Staff() {
-  const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
+  const [orders, setTotalOrders] = useState(0);
+  const [revenue, setRevenue] = useState(0);
+  const [userInfo, setUserInfo] = useState(null);
+  const [products, setProducts] = useState([]);
+  const calculateTotalProducts = async () => {
+    try {
+      const response = await AxiosClient.get("/api/Product");
+      const totalProducts = response.data.length; // Đếm số lượng sản phẩm
+      setProducts(response.data);
+      console.log("Total products:", totalProducts);
+    } catch (error) {
+      console.error("Error calculating total products:", error);
+    }
+  };
+  const calculateRevenue = async () => {
     try {
       const response = await AxiosClient.get("/api/Orders");
-      console.log(response);
-      const productsWithId = response.data.map((orders, index) => ({
-        ...orders,
-        id: index + 1, 
-      }));
-      setOrders(productsWithId);
+      const totalPrice = response.data.reduce((total, order) => total + order.TotalPrice, 0);
+      setRevenue(totalPrice);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error calculating revenue:", error);
     }
   };
-  
-
-
-
-  const deleteOrders = async (orderId) => {
+  const calculateTotalOrders = async () => {
     try {
-      await AxiosClient.delete(`/api/Orders/${orderId}`);
-      const updatedOrders = orders.filter(
-        (orders) => orders.id !== orderId
-      );
-      setOrders(updatedOrders);
-      fetchOrders();
+      const response = await AxiosClient.get("/api/Orders");
+      const totalOrders = response.data.length; // Đếm số lượng đơn hàng
+      setTotalOrders(totalOrders);
     } catch (error) {
-      console.error("Error deleting orders:", error);
+      console.error("Error calculating total orders:", error);
     }
   };
+  useEffect(() => {
+    calculateTotalOrders();
+    calculateRevenue();
 
-  const handleDetailsClick = (orderId) => {
-    navigate(`/ordersID/${orderId}`);
-  };
+    calculateTotalProducts();
 
-  const columns = [
-    {
-      field: "Id",
-      headerName: "No",
-      width: 70,
-    },
-    { field: "MachineId", headerName: "MachineID", width: 130 },
-    { field: "StoreId", headerName: "StoreID", width: 130 },
-    { field: "OrderImageId", headerName: "OrderImageID", width: 130 },
-    { field: "TotalPrice", headerName: "Price", width: 130 },
-    { field: "Status", headerName: "Status", width: 130 },
-    { field: "CreationDate", headerName: "Date", width: 130 },
-    {
-      field: "detail",
-      headerName: "Detail",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          handleDetailsClick(params.row.Id);
-        };
-
-        return (
-          <Button variant="contained" color="primary" onClick={onClick}>
-            <BiSolidDetail className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
-      field: "edit",
-      headerName: "Edit",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        return (
-          <Button variant="contained" color="primary">
-            <FaRegEdit className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onDelete = () => {
-          deleteOrders(params.row.Id);
-        };
-
-        return (
-          <Button variant="contained" color="error" onClick={onDelete}>
-            <MdDeleteOutline className="icon-table" />
-          </Button>
-        );
-      },
-    },
-  ].map((column) => ({
-    ...column,
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    align: "center",
-  }));
+    // Retrieving user data from session storage
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+    console.log("User Data:", userData);
+    const name = sessionStorage.getItem("name");
+    const email = sessionStorage.getItem("email");
+    const role = sessionStorage.getItem("role");
+    setUserInfo({ name, email, role });
+  }, []);
 
   return (
-    <div className="management-container">
-      <div className="container-fluid">
-        <div className="row">
-          <div className="mume markdown-preview">
-            <h2 className="mume-header">Orders List</h2>
-            <Row className="justify-content-center">
-              <Col>
-                <DataGrid
-                  className="table-manage-order-box"
-                  rows={orders}
-                  columns={columns}
-                  pageSize={5}
-                  pagination
-                />
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </div>
+    <div className="profile-container">
+      <Space size={25} direction="vertical" className="dashboard-home-page">
+        <Typography.Title level={4} className="justify-content-center "></Typography.Title>
+        <Space
+          direction="horizontal"
+          className="justify-content-center"
+        >
+            <DashboardCard
+            icon={<ProductFilled className="dashboard-icon-green" />}
+            title={"Products"}
+            value={products.length}  
+          />
+          <DashboardCard
+            icon={<ShoppingCartOutlined className="dashboard-icon-green" />}
+            title={"Orders"}
+            value={orders}  
+          />
+          <DashboardCard
+            icon={<DollarCircleOutlined className="dashboard-icon-red" />}
+            title={"Revenue"}
+            value={revenue}
+          />
+        </Space>
+      </Space>
     </div>
   );
 }
