@@ -1,165 +1,108 @@
-// src/components/Management.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
-import { BiSolidDetail } from "react-icons/bi";
-import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
-import { Row, Col } from "react-bootstrap";
-import { Button } from "@mui/material";
-import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
-import "./../common/styles/managements.css";
+import { Card, Space, Statistic, Typography } from "antd";
+import { DollarCircleOutlined, ProductFilled, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import AxiosClient from "../../api/axiosClient";
 
-export default function Management() {
+function DashboardCard({ title, value, icon }) {
+  return (
+    <Card>
+      <Space direction="horizontal">
+        {icon}
+        <Statistic title={title} value={value} />
+      </Space>
+    </Card>
+  );
+}
+
+export default function Managements() {
+  const [orders, setTotalOrders] = useState(0);
+  const [revenue, setRevenue] = useState(0);
+  const [customers, setCustomers] = useState(0);
   const [products, setProducts] = useState([]);
-  const [productName, setProductName] = useState("");
-  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    // Call API to fetch products on component mount
-    fetchProducts();
-  }, []);
+  const calculateTotalUsers = async () => { 
+    try {
+      const response = await AxiosClient.get("/api/Users");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error calculating total users:", error);
+    }
+  };
 
-  const fetchProducts = async () => {
+  const calculateTotalProducts = async () => {
     try {
       const response = await AxiosClient.get("/api/Product");
-      const productsWithId = response.data.map((product, index) => ({
-        ...product,
-        id: index + 1, // Generate a unique id for each product
-      }));
-      setProducts(productsWithId);
+      setProducts(response.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
-  
-
-  const addProduct = async () => {
-    if (productName.trim() !== "") {
-      try {
-        const response = await AxiosClient.post("/api/Product", {
-          productName: productName,
-        });
-        setProducts([...products, response.data]);
-        setProductName("");
-      } catch (error) {
-        console.error("Error adding product:", error);
-      }
+      console.error("Error calculating total products:", error);
     }
   };
 
-  const deleteProduct = async (productId) => {
+  const calculateRevenue = async () => {
     try {
-      await AxiosClient.delete(`/api/Product/${productId}`);
-      const updatedProducts = products.filter(
-        (product) => product.id !== productId
-      );
-      setProducts(updatedProducts);
+      const response = await AxiosClient.get("/api/Orders");
+      const totalPrice = response.data.reduce((total, order) => total + order.TotalPrice, 0);
+      setRevenue(totalPrice);
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error calculating revenue:", error);
     }
   };
 
-  const handleDetailsClick = (productId) => {
-    navigate(`/ordersID/${productId}`);
+  const calculateTotalOrders = async () => {
+    try {
+      const response = await AxiosClient.get("/api/Orders");
+      setTotalOrders(response.data.length);
+    } catch (error) {
+      console.error("Error calculating total orders:", error);
+    }
   };
 
-  const columns = [
-    {
-      field: "Id",
-      headerName: "ID",
-      width: 70,
-    },
-    { field: "ProductName", headerName: "Product Name", width: 130 },
-    { field: "Price", headerName: "Price", width: 130 },
-    {
-      field: "detail",
-      headerName: "Detail",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          handleDetailsClick(params.row.id);
-        };
+  useEffect(() => {
+    calculateTotalOrders();
+    calculateRevenue();
+    calculateTotalProducts();
+    calculateTotalUsers();
 
-        return (
-          <Button variant="contained" color="primary" onClick={onClick}>
-            <BiSolidDetail className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
-      field: "edit",
-      headerName: "Edit",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        return (
-          <Button variant="contained" color="primary">
-            <FaRegEdit className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onDelete = () => {
-          deleteProduct(params.row.id);
-        };
-
-        return (
-          <Button variant="contained" color="error" onClick={onDelete}>
-            <MdDeleteOutline className="icon-table" />
-          </Button>
-        );
-      },
-    },
-  ].map((column) => ({
-    ...column,
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    align: "center",
-  }));
+    // Retrieving user data from session storage
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+    console.log("User Data:", userData);
+    const name = sessionStorage.getItem("name");
+    const email = sessionStorage.getItem("email");
+    const role = sessionStorage.getItem("role");
+    setCustomers(users.length);
+  }, [users]);
 
   return (
-    <div className="management-container">
-      <h2 className="mume-header">Product Management</h2>
-      <div className="product-input-container">
-        <input
-          type="text"
-          placeholder="Enter product name"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          className="product-input"
-        />
-        <button onClick={addProduct} className="add-button">
-          Add Product
-        </button>
-      </div>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="mume markdown-preview">
-            <h2 className="mume-header">Product List</h2>
-            <Row className="justify-content-center">
-              <Col>
-                <DataGrid
-                  className="table-manage-order-box"
-                  rows={products}
-                  columns={columns}
-                  pageSize={5}
-                  pagination
-                />
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </div>
+    <div className="profile-container">
+      <Space size={25} direction="vertical" className="dashboard-home-page">
+        <Typography.Title level={4} className="justify-content-center "></Typography.Title>
+        <Space
+          direction="horizontal"
+          className="justify-content-center"
+        >
+          <DashboardCard
+            icon={<ProductFilled className="dashboard-icon-green" />}
+            title={"Products"}
+            value={products.length}  
+          />
+          <DashboardCard
+            icon={<ShoppingCartOutlined className="dashboard-icon-green" />}
+            title={"Orders"}
+            value={orders}  
+          />
+          <DashboardCard
+            icon={<DollarCircleOutlined className="dashboard-icon-red" />}
+            title={"Revenue"}
+            value={revenue}
+          />
+          <DashboardCard
+            icon={<UserOutlined className="dashboard-icon-purple" />}
+            title={"Customers"}
+            value={customers}
+          />
+        </Space>
+      </Space>
     </div>
   );
 }

@@ -26,8 +26,19 @@ export default function Header() {
   const handleClickManagementOrders = () => {
     navigate("/managementOrders");
   };
+
+  const handleClickManagement = () => {
+    navigate("/managements");
+  };
+  const handleClickStaff = () => {
+    navigate("/staffs");
+  };
+  const handleClickAdmin = () => {
+    navigate("/admin");
+  };
+
   const handleLogin = () => {
-    sessionStorage.removeItem("role"); 
+    sessionStorage.removeItem("role");
     setUserRole(0); 
     navigate("/");
   };
@@ -36,12 +47,41 @@ export default function Header() {
     <header>
       <nav className="navbar navbar-expand-md navbar-dark navbar-header">
         <div className="container">
-           {(role === 3 || role === 2) && (
+           {(role === 1) && (
+          <button
+            className="login-button-header-menu"
+            onClick={handleClickAdmin}
+          >
+            <FaHome className="icon-header" />
+            <div className="header-name">Home</div>
+          </button>
+          )}
+            {(role === 2) && (
+          <button
+            className="login-button-header-menu"
+            onClick={handleClickManagement}
+          >
+            <FaHome className="icon-header" />
+            <div className="header-name">Home</div>
+          </button>
+          )}
+            {(role === 3) && (
+          <button
+            className="login-button-header-menu"
+            onClick={handleClickStaff}
+          >
+            <FaHome className="icon-header" />
+            <div className="header-name">Home</div>
+          </button>
+          )}
+
+
+          {(role === 3 || role === 2) && (
           <button
             className="login-button-header-menu"
             onClick={handleClickManagementProducts}
           >
-            <FaHome className="icon-header" />
+            <IoIosBusiness className="icon-header" />
             <div className="header-name">Management Products</div>
           </button>
           )}

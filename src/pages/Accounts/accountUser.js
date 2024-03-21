@@ -9,21 +9,23 @@ import {  IoIosCheckbox } from "react-icons/io";
 
 export default function Accounts() {
   const [users, setUser] = useState([]);
-
+  const [totalUsers, setTotalUsers] = useState(0); 
 
   useEffect(() => {
    
     fetchUsers();
   }, []);
-
+  useEffect(() => {
+    setTotalUsers(users.length);
+  }, [users]);
   const fetchUsers = async () => {
     try {
       const response = await AxiosClient.get("/api/Users");
-      const ordersWithId = response.data.map((orders, index) => ({
+      const usersWithId = response.data.map((orders, index) => ({
         ...orders,
         id: index + 1, 
       }));
-      setUser(ordersWithId);
+      setUser(usersWithId);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -72,10 +74,10 @@ export default function Accounts() {
   }));
 
   return (
-    <div className="admin-container">
+    <div className="container-fluid">
       <div className="container-fluid">
         <div className="row">
-          <div className="mume markdown-preview">
+        <div className="mume markdown-preview">
             <Row className="justify-content-center">
               <Col>
                 <DataGrid

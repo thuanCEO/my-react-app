@@ -11,12 +11,15 @@ import { IoIosCheckbox } from "react-icons/io";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-
+  const [totalProducts, setTotalProducts] = useState(0); 
   useEffect(() => {
     
     fetchProducts();
   }, []);
-
+  useEffect(() => {
+    const totalProducts = products.length;
+    setTotalProducts(totalProducts);
+  }, [products]);
   const fetchProducts = async () => {
     try {
       const response = await AxiosClient.get("/api/Product");
@@ -107,7 +110,6 @@ export default function Products() {
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
-            <h2 className="mume-header">Products List</h2>
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
