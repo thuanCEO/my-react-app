@@ -1,87 +1,70 @@
+// src/components/Management.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { BiSolidDetail } from "react-icons/bi";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
-import "./../common/styles/staffs.css";
+import "./../../components/common/styles/products.css";
+import { IoIosCheckbox } from "react-icons/io";
 
-export default function Staff() {
-  const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
+export default function Products() {
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-
-    fetchOrders();
+    
+    fetchProducts();
   }, []);
 
-  const fetchOrders = async () => {
+  const fetchProducts = async () => {
     try {
-      const response = await AxiosClient.get("/api/Orders");
-      console.log(response);
-      const productsWithId = response.data.map((orders, index) => ({
-        ...orders,
+      const response = await AxiosClient.get("/api/Product");
+      const productsWithId = response.data.map((product, index) => ({
+        ...product,
         id: index + 1, 
       }));
-      setOrders(productsWithId);
+      setProducts(productsWithId);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
   
 
+ 
 
-
-  const deleteOrders = async (orderId) => {
+  const deleteProduct = async (productId) => {
     try {
-      await AxiosClient.delete(`/api/Orders/${orderId}`);
-      const updatedOrders = orders.filter(
-        (orders) => orders.id !== orderId
+      await AxiosClient.delete(`/api/Product/${productId}`);
+      const updatedProducts = products.filter(
+        (product) => product.id !== productId
       );
-      setOrders(updatedOrders);
-      fetchOrders();
+      setProducts(updatedProducts);
+      fetchProducts();
     } catch (error) {
-      console.error("Error deleting orders:", error);
+      console.error("Error deleting product:", error);
     }
-  };
-
-  const handleDetailsClick = (orderId) => {
-    navigate(`/ordersID/${orderId}`);
   };
 
   const columns = [
     {
       field: "Id",
-      headerName: "No",
+      headerName: "ID",
       width: 70,
     },
-    { field: "MachineId", headerName: "MachineID", width: 130 },
-    { field: "StoreId", headerName: "StoreID", width: 130 },
-    { field: "OrderImageId", headerName: "OrderImageID", width: 130 },
-    { field: "TotalPrice", headerName: "Price", width: 130 },
-    { field: "Status", headerName: "Status", width: 130 },
-    { field: "CreationDate", headerName: "Date", width: 130 },
-    {
-      field: "detail",
-      headerName: "Detail",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          handleDetailsClick(params.row.Id);
-        };
-
-        return (
-          <Button variant="contained" color="primary" onClick={onClick}>
-            <BiSolidDetail className="icon-table" />
-          </Button>
-        );
-      },
-    },
+    { field: "ProductName", headerName: "Product Name", width: 130 },
+    { field: "Price", headerName: "Price", width: 130 },
+    { field: "Description", headerName: "Description", width: 130 },
+    { field: "Quantity", headerName: "Quantity", width: 130 },
+    { field: "Code", headerName: "Code", width: 130 },
+    { field: "BrandId", headerName: "BrandId", width: 130 },
+    { field: "Status", headerName: "Status", width: 130 ,renderCell: (params) => {
+      if (params.row.Status === 1) {
+        return ( <IoIosCheckbox className="icon-table" /> );
+      } else if (params.row.Status === 2) {
+        return null; 
+      }
+    }},
     {
       field: "edit",
       headerName: "Edit",
@@ -102,7 +85,7 @@ export default function Staff() {
       width: 90,
       renderCell: (params) => {
         const onDelete = () => {
-          deleteOrders(params.row.Id);
+          deleteProduct(params.row.Id);
         };
 
         return (
@@ -124,12 +107,12 @@ export default function Staff() {
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
-            <h2 className="mume-header">Orders List</h2>
+            <h2 className="mume-header">Products List</h2>
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
                   className="table-manage-order-box"
-                  rows={orders}
+                  rows={products}
                   columns={columns}
                   pageSize={5}
                   pagination

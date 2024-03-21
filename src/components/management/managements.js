@@ -8,7 +8,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
-import "./managements.css";
+import "./../common/styles/managements.css";
 
 export default function Management() {
   const [products, setProducts] = useState([]);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+import './../common/styles/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegUserCircle, FaLock } from "react-icons/fa";
 import axiosClient from '../../api/axiosClient'; // Import axiosClient for API calls

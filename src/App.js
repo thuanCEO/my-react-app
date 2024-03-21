@@ -13,6 +13,11 @@ import Admin from './components/admin/admin';
 import Managements from "./components/management/managements";
 import Staffs from './components/staff/staffs';
 import OrderDetails from './pages/Order/ordersDetails';
+
+import AccountUser from './pages/Accounts/accountUser';
+import Products from './pages/Products/products';
+import Orders from "./pages/Orders/orders";
+
 import DetailsUser from './components/admin/components/detailsUsersByAdmin';
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -42,6 +47,10 @@ export default function App() {
         <Route path="/managements" element={<Managements />} />
         <Route path="/staffs" element={<Staffs />} />
         <Route path="/signUp" element={<SignUp/>} />
+
+        <Route path="/managementAccountUser" element={<AccountUser/>} />
+        <Route path="/managementProducts" element={<Products/>} />
+        <Route path="/managementOrders" element={<Orders/>} />
 
         <Route path="/detailsID/:userID" element={<DetailsUser />} />
         <Route path="/ordersID/:productId" element={<OrderDetails />} />

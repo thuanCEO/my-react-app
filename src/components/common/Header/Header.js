@@ -1,69 +1,53 @@
-import React, { useState } from "react";
-import "./Header.css";
-import { IoIosLogIn, IoIosMenu } from "react-icons/io";
+import React from "react";
+import "./../styles/Header.css";
+import { IoIosLogIn, IoIosMenu,IoIosBusiness } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
-import { RiListSettingsFill } from "react-icons/ri";
-import { useNavigate, useLocation } from "react-router-dom";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material"; // Import Drawer
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  // Sử dụng hook useNavigate để lấy một hàm chuyển hướng
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
 
-  // Tạo một hàm để xử lý sự kiện khi nhấn nút
+  const handleClickManagementAccounts = () => {
+    navigate('/managementAccountUser');
+  };
+
+  const handleClickManagementProducts = () => {
+    navigate('/managementProducts');
+  };
+
+  const handleClickManagementOrders = () => {
+    navigate('/managementOrders');
+  };
+
   const handleLogin = () => {
     navigate("/");
   };
-  const handleListItemClick = (index) => {
-    if (index === 1) {
-      // Check for the "Product Management" item
-      navigate("/management"); // Navigate to the management route
-    } else {
-      // Handle navigation for other items if needed
-    }
-  };
-
-  const location = useLocation();
 
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark navbar-header">
         <div className="container">
-          <button
-            className="login-button-header-menu"
-            onClick={() => setOpen(!open)}
-          >
-            <IoIosMenu className="icon-header" />
+      
+          <button className="login-button-header-menu" onClick={handleClickManagementProducts}>
+            <FaHome className="icon-header" />
+            <div className="header-name">Management Products</div>
           </button>
+
+          <button className="login-button-header-menu" onClick={handleClickManagementOrders}>
+            <IoIosBusiness className="icon-header" />
+            <div className="header-name">Management Orders</div>
+          </button>
+
+          <button className="login-button-header-menu" onClick={handleClickManagementAccounts}>
+            <IoIosMenu className="icon-header" />
+            <div className="header-name">Management Accounts</div>
+          </button>
+
           <button onClick={handleLogin} className="login-button-header">
             <IoIosLogIn className="icon-header" />
           </button>
         </div>
       </nav>
-      <Drawer open={open} onClose={() => setOpen(false)}>
-        <List>
-          {["Home", "Product Management"].map((text, index) => (
-            <ListItem
-              key={text}
-              button
-              onClick={() => handleListItemClick(index)}
-              selected={location.pathname === "/management" && index === 1}
-            >
-              <ListItemIcon>
-                {index % 2 === 0 ? <FaHome /> : <RiListSettingsFill />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
     </header>
   );
 }

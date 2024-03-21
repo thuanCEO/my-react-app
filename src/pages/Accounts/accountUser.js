@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { BiSolidDetail } from "react-icons/bi";
 import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; 
-import "./../common/styles/admin.css";
+import "./../../components/common/styles/accountUser.css";
+import {  IoIosCheckbox } from "react-icons/io";
 
-export default function Admin() {
+export default function Accounts() {
   const [users, setUser] = useState([]);
 
-  const navigate = useNavigate();
 
   useEffect(() => {
    
@@ -31,29 +28,6 @@ export default function Admin() {
       console.error("Error fetching products:", error);
     }
   };
-
-// Add Users
-
-
-
-// Delete Users -> delete from database
-const deleteUsers = async (Id) => {
-  try {
-    await AxiosClient.delete(`/api/Users/${Id}`); 
-    const updatedUsers = users.filter(
-      (user) => user.Id !== Id 
-    );
-    setUser(updatedUsers);
-  } catch (error) {
-    console.error("Error deleting user:", error);
-  }
-};
-
-  // Details user
-  const handleDetailsClick = (userID) => {
-    navigate(`/detailsID/${userID}`);
-  };
-
   const columns = [
     {
       field: "Id",
@@ -61,27 +35,22 @@ const deleteUsers = async (Id) => {
       width: 70,
     },
     { field: "FullName", headerName: "Full Name", width: 140 },
-    { field: "Email", headerName: "Email", width: 330 },
+    { field: "Email", headerName: "Email", width: 300 },
     { field: "Password", headerName: "Password", width: 160 },
     { field: "PhoneNumber", headerName: "Phone", width: 140 },
-    {
-      field: "detail",
-      headerName: "Detail",
-      sortable: false,
-      width: 80,
-      renderCell: (params) => {
-        const onClick = (e) => {
-          e.stopPropagation();
-          handleDetailsClick(params.row.id);
-        };
-
-        return (
-          <Button variant="contained" color="primary" onClick={onClick}>
-            <BiSolidDetail className="icon-table" />
-          </Button>
-        );
-      },
-    },
+    { field: "Code", headerName: "Code", width: 100 },
+    { field: "Address", headerName: "Address", width: 140 },
+    { field: "Status", 
+    headerName: "Status", 
+    width: 50, 
+    renderCell: (params) => {
+      if (params.row.Status === 1) {
+        return ( <IoIosCheckbox className="icon-table" /> );
+      } else if (params.row.Status === 2) {
+        return null; 
+      }
+    }
+  },
     {
       field: "edit",
       headerName: "Edit",
@@ -91,23 +60,6 @@ const deleteUsers = async (Id) => {
         return (
           <Button variant="contained" color="primary">
             <FaRegEdit className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        const onDelete = () => {
-          deleteUsers(params.row.Id);
-        };
-
-        return (
-          <Button variant="contained" color="error" onClick={onDelete}>
-            <MdDeleteOutline className="icon-table" />
           </Button>
         );
       },
