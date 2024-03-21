@@ -56,32 +56,32 @@ export default function CreateAccounts() {
     };
     
     return (
-        <div className="login-container">
-            <div className="login-box">
-               <form className="login-form" onSubmit={handleCreateAccount}>
+        <div className="create-container">
+            <div className="create-box">
+               <form className="create-form" >
                     <div>
-                        <button type="submit" className="login-button"> Create Accounts</button>
+                        <button type="submit" className="create-button" onClick={handleCreateAccount}> Create Accounts</button>
                     </div>
-                   <div className="login-input-group">   
-                        <input placeholder='FullName' type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="login-input" />
+                   <div className="create-input-group">   
+                        <input placeholder='FullName' type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="create-input" />
                     </div>
-                    <div className="login-input-group">
-                        <input placeholder='Phone' type="tel" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Phone' type="tel" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} className="create-input" />
                     </div>
-                    <div className="login-input-group">
-                        <input placeholder='Email' type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Email' type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="create-input" />
                     </div>
-                    <div className="login-input-group">
-                        <input placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="create-input" />
                     </div>
-                    <div className="login-input-group">
-                        <input placeholder='Address' type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Address' type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="create-input" />
                     </div>   
-                    <div className="login-input-group">
-                        <input placeholder='Description' type="text" value={description} onChange={(e) => setDescription(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Description' type="text" value={description} onChange={(e) => setDescription(e.target.value)} className="create-input" />
                     </div>       
-                    <div className="login-input-group">
-                        <input placeholder='Code' type="text" value={code} onChange={(e) => setCode(e.target.value)} className="login-input" />
+                    <div className="create-input-group">
+                        <input placeholder='Code' type="text" value={code} onChange={(e) => setCode(e.target.value)} className="create-input" />
                     </div>   
                 </form>
             </div>
