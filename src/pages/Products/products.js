@@ -11,6 +11,7 @@ import { IoIosCheckbox } from "react-icons/io";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [totalProducts, setTotalProducts] = useState(0); 
   useEffect(() => {
     

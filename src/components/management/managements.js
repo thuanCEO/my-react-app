@@ -67,8 +67,11 @@ export default function Managements() {
     // Retrieving user data from session storage
     const userData = JSON.parse(sessionStorage.getItem("userData"));
     console.log("User Data:", userData);
+    // eslint-disable-next-line no-unused-vars
     const name = sessionStorage.getItem("name");
+    // eslint-disable-next-line no-unused-vars
     const email = sessionStorage.getItem("email");
+    // eslint-disable-next-line no-unused-vars
     const role = sessionStorage.getItem("role");
     setCustomers(users.length);
   }, [users]);

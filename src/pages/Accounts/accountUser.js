@@ -9,6 +9,7 @@ import {  IoIosCheckbox } from "react-icons/io";
 
 export default function Accounts() {
   const [users, setUser] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [totalUsers, setTotalUsers] = useState(0); 
 
   useEffect(() => {
@@ -40,7 +41,6 @@ export default function Accounts() {
     { field: "Email", headerName: "Email", width: 300 },
     { field: "Password", headerName: "Password", width: 160 },
     { field: "PhoneNumber", headerName: "Phone", width: 140 },
-    { field: "Code", headerName: "Code", width: 100 },
     { field: "Address", headerName: "Address", width: 140 },
     { field: "Status", 
     headerName: "Status", 

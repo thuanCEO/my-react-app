@@ -21,6 +21,7 @@ function DashboardCard({ title, value, icon }) {
 export default function Staff() {
   const [orders, setTotalOrders] = useState(0);
   const [revenue, setRevenue] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [userInfo, setUserInfo] = useState(null);
   const [products, setProducts] = useState([]);
   const calculateTotalProducts = async () => {
