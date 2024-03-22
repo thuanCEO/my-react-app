@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./../../components/common/styles/products.css";
-import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
+import { IoIosCheckbox } from "react-icons/io";
 import EditProductModal from "../Modal/EditProduct";
 import CreateProductModal from "../Modal/CreateProduct";
 
@@ -73,15 +73,16 @@ export default function Products() {
       width: 70,
     },
     { field: "ProductName", headerName: "Product Name", width: 130 },
-    { field: "Price", headerName: "Price", width: 130 },
-    { field: "Description", headerName: "Description", width: 130 },
-    { field: "Quantity", headerName: "Quantity", width: 130 },
-    { field: "Code", headerName: "Code", width: 130 },
-    { field: "BrandId", headerName: "Brand Id", width: 130 },
+    { field: "Price", headerName: "Price", width: 100 },
+    { field: "Description", headerName: "Description", width: 150 },
+    { field: "Quantity", headerName: "Quantity", width: 80 },
+    { field: "Code", headerName: "Code", width: 70 },
+    { field: "BrandId", headerName: "Brand Id", width: 90 },
+    { field: "Category", headerName: "Category", width: 130 }, //add category
     {
       field: "Status",
       headerName: "Status",
-      width: 130,
+      width: 60,
       renderCell: (params) => {
         if (params.row.Status === 1) {
           return <IoIosCheckbox className="icon-table icon-green" />;
@@ -185,6 +186,7 @@ export default function Products() {
         variant="contained"
         color="primary"
         onClick={() => handleCreateClick()}
+        className="button-create-product"
       >
         <MdAddCircleOutline className="icon-table" />
       </Button>

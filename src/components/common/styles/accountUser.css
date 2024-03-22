@@ -5,7 +5,8 @@
   margin: 0 auto;
 }
 
-.management-container button {
+.button-create-product {
+  margin-left: 91% !important;
 }
 
 .management-container h2 {

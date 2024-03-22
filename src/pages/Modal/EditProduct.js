@@ -51,12 +51,12 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
     setFormData({ ...product }); // Pre-fill form with selected product data
   }, [product]); // Update form data on product change
 
-  const mockCategories = [
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Clothing" },
-    { id: 3, name: "Homeware" },
-    // Add more categories as needed
-  ];
+  // const mockCategories = [
+  //   { id: 1, name: "Electronics" },
+  //   { id: 2, name: "Clothing" },
+  //   { id: 3, name: "Homeware" },
+  //   // Add more categories as needed
+  // ];
 
   useEffect(() => {
     const fetchCategories = async () => {

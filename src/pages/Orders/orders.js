@@ -8,7 +8,7 @@ import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./../../components/common/styles/orders.css";
-import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
+import { IoIosCheckbox } from "react-icons/io";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -132,13 +132,13 @@ export default function Orders() {
         return null;
       },
     },
-  ].filter((column) => role === 2 || column.field !== "delete")
+  ].filter((column) => role === 2 || column.field !== "delete");
   return (
     <div className="management-container">
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
-          <h2>Total Price: {totalPrice}</h2>
+            <h2>Total Price: {totalPrice}</h2>
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
