@@ -127,6 +127,8 @@ export default function Products() {
 
   return (
     <div className="management-container">
+      <h1>Management Products</h1>
+      <button>create</button>
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">

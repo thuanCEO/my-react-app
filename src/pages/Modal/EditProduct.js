@@ -25,7 +25,7 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
   }, [product]); // Update form data on product change
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit Product</Modal.Title>
       </Modal.Header>
@@ -80,10 +80,11 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
               required
             />
           </div>
-
-          <button type="submit" className="btn btn-primary">
-            Save Changes
-          </button>
+          <div className="button-container-edit-product">
+            <button type="submit" className="btn btn-primary">
+              Save Changes
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal>
