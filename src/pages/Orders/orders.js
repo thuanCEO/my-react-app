@@ -8,15 +8,14 @@ import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./../../components/common/styles/orders.css";
-import { IoIosCheckbox } from "react-icons/io";
+import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [totalOrders, setTotalOrders] = useState(0);
   const [role, setUserRole] = useState(0);
+
   useEffect(() => {
     fetchOrders();
     const roleFromSession = sessionStorage.getItem("role");
@@ -24,23 +23,20 @@ export default function Orders() {
       setUserRole(parseInt(roleFromSession));
     }
   }, []);
+
   useEffect(() => {
     const totalPrice = orders.reduce(
       (total, order) => total + order.TotalPrice,
       0
     );
     setTotalPrice(totalPrice);
-
-    const totalOrders = orders.length;
-    setTotalOrders(totalOrders);
   }, [orders]);
 
   const fetchOrders = async () => {
     try {
       const response = await AxiosClient.get("/api/Orders");
-      console.log(response);
-      const productsWithId = response.data.map((orders, index) => ({
-        ...orders,
+      const productsWithId = response.data.map((order, index) => ({
+        ...order,
         id: index + 1,
       }));
       setOrders(productsWithId);
@@ -52,9 +48,8 @@ export default function Orders() {
   const deleteOrders = async (orderId) => {
     try {
       await AxiosClient.delete(`/api/Orders/${orderId}`);
-      const updatedOrders = orders.filter((orders) => orders.id !== orderId);
+      const updatedOrders = orders.filter((order) => order.id !== orderId);
       setOrders(updatedOrders);
-      fetchOrders();
     } catch (error) {
       console.error("Error deleting orders:", error);
     }
@@ -77,11 +72,13 @@ export default function Orders() {
     { field: "CreationDate", headerName: "Date", width: 130 },
     {
       field: "Status",
+      headerName: "Status",
+      width: 130,
       renderCell: (params) => {
         if (params.row.Status === 1) {
-          return <IoIosCheckbox className="icon-table" />;
-        } else if (params.row.Status === 2) {
-          return null;
+          return <IoIosCheckbox className="icon-table icon-green" />;
+        } else if (params.row.Status === 0) {
+          return <IoIosCheckbox className="icon-table icon-red" />;
         }
       },
     },
@@ -131,25 +128,18 @@ export default function Orders() {
               <MdDeleteOutline className="icon-table" />
             </Button>
           );
-        } else {
-          return null;
         }
+        return null;
       },
     },
-  ].map((column) => ({
-    ...column,
-    headerClassName: "super-app-theme--header",
-    headerAlign: "center",
-    align: "center",
-  }));
-
+  ].filter((column) => role === 2 || column.field !== "delete")
   return (
     <div className="management-container">
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
+          <h2>Total Price: {totalPrice}</h2>
             <Row className="justify-content-center">
-              <h2>Total Price: {totalPrice}</h2>
               <Col>
                 <DataGrid
                   className="table-manage-order-box"
@@ -157,6 +147,7 @@ export default function Orders() {
                   columns={columns}
                   pageSize={5}
                   pagination
+                  autoHeight
                 />
               </Col>
             </Row>

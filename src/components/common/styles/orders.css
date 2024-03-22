@@ -128,3 +128,21 @@
     margin: auto !important;
     width: fit-content;
   }
+  .table-manage-order-box {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  .management-container {
+    padding: 20px;
+  }
+  .icon-green {
+    color: green;
+    margin: auto;
+  }
+  .icon-red {
+    color: red;
+    margin: auto;
+  }
+
+    

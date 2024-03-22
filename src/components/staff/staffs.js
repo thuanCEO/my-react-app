@@ -26,7 +26,7 @@ export default function Staff() {
   const [products, setProducts] = useState([]);
   const calculateTotalProducts = async () => {
     try {
-      const response = await AxiosClient.get("/api/Product");
+      const response = await AxiosClient.get("/api/Products");
       const totalProducts = response.data.length; // Đếm số lượng sản phẩm
       setProducts(response.data);
       console.log("Total products:", totalProducts);

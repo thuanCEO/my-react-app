@@ -42,17 +42,18 @@ export default function Accounts() {
     { field: "Password", headerName: "Password", width: 160 },
     { field: "PhoneNumber", headerName: "Phone", width: 140 },
     { field: "Address", headerName: "Address", width: 140 },
-    { field: "Status", 
-    headerName: "Status", 
-    width: 50, 
-    renderCell: (params) => {
-      if (params.row.Status === 1) {
-        return ( <IoIosCheckbox className="icon-table" /> );
-      } else if (params.row.Status === 2) {
-        return null; 
-      }
-    }
-  },
+    {
+      field: "Status",
+      headerName: "Status",
+      width: 130,
+      renderCell: (params) => {
+        if (params.row.Status === 1) {
+          return <IoIosCheckbox className="icon-table icon-green" />;
+        } else if (params.row.Status === 0) {
+          return <IoIosCheckbox className="icon-table icon-red" />;
+        }
+      },
+    },
     {
       field: "edit",
       headerName: "Edit",
