@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./../../components/common/styles/products.css";
-import { IoIosCheckbox } from "react-icons/io";
+import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
 import EditProductModal from "../Modal/EditProduct";
 
 export default function Products() {
@@ -36,7 +36,7 @@ export default function Products() {
   }, [products]);
   const fetchProducts = async () => {
     try {
-      const response = await AxiosClient.get("/api/Product");
+      const response = await AxiosClient.get("/api/Products");
       const productsWithId = response.data.map((product, index) => ({
         ...product,
         id: index + 1,
@@ -49,7 +49,7 @@ export default function Products() {
 
   const deleteProduct = async (productId) => {
     try {
-      await AxiosClient.delete(`/api/Product/${productId}`);
+      await AxiosClient.delete(`/api/Products/${productId}`);
       const updatedProducts = products.filter(
         (product) => product.id !== productId
       );
@@ -78,9 +78,9 @@ export default function Products() {
       width: 130,
       renderCell: (params) => {
         if (params.row.Status === 1) {
-          return <IoIosCheckbox className="icon-table" />;
-        } else if (params.row.Status === 2) {
-          return null;
+          return <IoIosCheckbox className="icon-table icon-green" />;
+        } else if (params.row.Status === 0) {
+          return <IoIosCheckbox className="icon-table icon-red" />;
         }
       },
     },
@@ -128,7 +128,7 @@ export default function Products() {
   const handleProductSubmit = async (updatedProduct) => {
     try {
       const response = await AxiosClient.put(
-        `/api/Product/${selectedProduct.Id}`,
+        `/api/Products/${selectedProduct.Id}`,
         updatedProduct
       );
       if (response.ok) {

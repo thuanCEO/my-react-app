@@ -129,3 +129,10 @@ body {
   margin: auto !important;
   width: fit-content;
 }
+.icon-green {
+  color: green;
+}
+.icon-red {
+  color: red;
+  margin: auto;
+}
