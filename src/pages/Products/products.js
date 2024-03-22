@@ -9,12 +9,14 @@ import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API c
 import "./../../components/common/styles/products.css";
 import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
 import EditProductModal from "../Modal/EditProduct";
+import CreateProductModal from "../Modal/CreateProduct";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [totalProducts, setTotalProducts] = useState(0);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [createModalShow, setCreateModalShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleEditClick = (product) => {
@@ -24,7 +26,11 @@ export default function Products() {
 
   const handleModalClose = () => {
     setEditModalShow(false);
+    setCreateModalShow(false);
     setSelectedProduct(null); // Xóa sản phẩm được chọn khi đóng
+  };
+  const handleCreateClick = () => {
+    setCreateModalShow(true);
   };
 
   useEffect(() => {
@@ -125,7 +131,7 @@ export default function Products() {
     align: "center",
   }));
 
-  const handleProductSubmit = async (updatedProduct) => {
+  const handleProductSubmitEdit = async (updatedProduct) => {
     try {
       const response = await AxiosClient.put(
         `/api/Products/${selectedProduct.Id}`,
@@ -147,13 +153,38 @@ export default function Products() {
     }
   };
 
+  const handleProductSubmitCreate = async (formData) => {
+    try {
+      const response = await fetch("/api/Product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const newProduct = await response.json();
+        setProducts([...products, newProduct]); // Cập nhật danh sách sản phẩm
+        handleModalClose(); // Đóng CreateProductModal
+        // Thêm thông báo thành công (tùy chọn)
+        console.log("Product added successfully!");
+      } else {
+        console.error("Error creating product:", response.statusText);
+        // Hiển thị thông báo lỗi (tùy chọn)
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Hiển thị thông báo lỗi (tùy chọn)
+    }
+  };
   return (
     <div className="management-container">
       <h2>Management Products</h2>
       <Button
         variant="contained"
         color="primary"
-        onClick={() => handleEditClick(null)}
+        onClick={() => handleCreateClick()}
       >
         <MdAddCircleOutline className="icon-table" />
       </Button>
@@ -179,10 +210,16 @@ export default function Products() {
           show={editModalShow}
           onHide={handleModalClose}
           product={selectedProduct}
-          iscreate="true"
+          onSubmit={handleProductSubmitEdit}
         />
       )}
-      {/* onSubmit={handleProductSubmit} */}
+      {createModalShow && (
+        <CreateProductModal
+          show={createModalShow}
+          onHide={handleModalClose}
+          onSubmit={handleProductSubmitCreate}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap"; // Import Modal from react-bootstrap
 
-function EditProductModal({ show, onHide, product, onSubmit }) {
+function CreateProductModal({ show, onHide, onSubmit }) {
   const [formData, setFormData] = useState(() => ({
     ProductName: "",
     Price: "",
@@ -10,30 +10,17 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
     CategoryId: "",
   }));
 
-  useEffect(() => {
-    if (product) {
-      setFormData({
-        ProductName: product.ProductName || "",
-        Price: product.Price || "",
-        Quantity: product.Quantity || "",
-        Description: product.Description || "",
-        CategoryId: product.CategoryId || "", // Or your default category ID
-      });
-    }
-  }, [product]);
-
   const [categories, setCategories] = useState([]);
 
   const handleChange = (event) => {
     const isNumericField =
       event.target.name === "Price" || event.target.name === "Quantity";
-    const newValue =
-      event.target.type === "checkbox"
-        ? event.target.checked
-        : isNumericField
-        ? event.target.value.replace(/[^\d]/g, "") // Remove non-numeric characters for numeric fields
-        : event.target.value; // Allow all characters for other fields
-
+    const newValue = isNumericField
+      ? event.target.value.replace(/[^\d]/g, "") // Remove non-numeric characters for numeric fields
+      : event.target.value; // Allow all characters for other fields
+    if (event.target.name === "Quantity" && parseInt(newValue) < 1) {
+      return; // Ngăn cập nhật giá trị nếu không hợp lệ
+    }
     setFormData({
       ...formData,
       [event.target.name]: newValue,
@@ -48,22 +35,10 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
   };
 
   useEffect(() => {
-    setFormData({ ...product }); // Pre-fill form with selected product data
-  }, [product]); // Update form data on product change
-
-  const mockCategories = [
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Clothing" },
-    { id: 3, name: "Homeware" },
-    // Add more categories as needed
-  ];
-
-  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(""); // Replace with your API endpoint
         const data = await response.json();
-        // const data = mockCategories;
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -76,7 +51,7 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Product</Modal.Title>
+        <Modal.Title>Create Product</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>
@@ -133,17 +108,6 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="Status">Status: </label>
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="Status"
-              name="Status"
-              checked={formData.Status}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="CategoryId">Category: </label>
             <select
               className="form-control"
@@ -162,7 +126,7 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
           </div>
           <div className="button-container-edit-product">
             <button type="submit" className="btn btn-primary">
-              Save Changes
+              Add product
             </button>
           </div>
         </form>
@@ -171,4 +135,4 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
   );
 }
 
-export default EditProductModal;
+export default CreateProductModal;
