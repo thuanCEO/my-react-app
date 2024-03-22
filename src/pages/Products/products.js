@@ -8,13 +8,26 @@ import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 import "./../../components/common/styles/products.css";
 import { IoIosCheckbox } from "react-icons/io";
+import EditProductModal from "../Modal/EditProduct";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   // eslint-disable-next-line no-unused-vars
-  const [totalProducts, setTotalProducts] = useState(0); 
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleEditClick = (product) => {
+    setSelectedProduct(product);
+    setEditModalShow(true);
+  };
+
+  const handleModalClose = () => {
+    setEditModalShow(false);
+    setSelectedProduct(null); // Xóa sản phẩm được chọn khi đóng
+  };
+
   useEffect(() => {
-    
     fetchProducts();
   }, []);
   useEffect(() => {
@@ -26,16 +39,13 @@ export default function Products() {
       const response = await AxiosClient.get("/api/Product");
       const productsWithId = response.data.map((product, index) => ({
         ...product,
-        id: index + 1, 
+        id: index + 1,
       }));
       setProducts(productsWithId);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
-  
-
- 
 
   const deleteProduct = async (productId) => {
     try {
@@ -62,13 +72,18 @@ export default function Products() {
     { field: "Quantity", headerName: "Quantity", width: 130 },
     { field: "Code", headerName: "Code", width: 130 },
     { field: "BrandId", headerName: "BrandId", width: 130 },
-    { field: "Status", headerName: "Status", width: 130 ,renderCell: (params) => {
-      if (params.row.Status === 1) {
-        return ( <IoIosCheckbox className="icon-table" /> );
-      } else if (params.row.Status === 2) {
-        return null; 
-      }
-    }},
+    {
+      field: "Status",
+      headerName: "Status",
+      width: 130,
+      renderCell: (params) => {
+        if (params.row.Status === 1) {
+          return <IoIosCheckbox className="icon-table" />;
+        } else if (params.row.Status === 2) {
+          return null;
+        }
+      },
+    },
     {
       field: "edit",
       headerName: "Edit",
@@ -76,7 +91,11 @@ export default function Products() {
       width: 90,
       renderCell: (params) => {
         return (
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleEditClick(params.row)}
+          >
             <FaRegEdit className="icon-table" />
           </Button>
         );
@@ -125,6 +144,13 @@ export default function Products() {
           </div>
         </div>
       </div>
+      {editModalShow && (
+        <EditProductModal
+          show={editModalShow}
+          onHide={handleModalClose}
+          product={selectedProduct}
+        />
+      )}
     </div>
   );
 }

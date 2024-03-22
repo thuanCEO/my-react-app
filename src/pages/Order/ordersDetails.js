@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./../../components/common/styles/ordersDetails.css";
 import { BiCommentDetail } from "react-icons/bi";
-import ProductInfoModal from "../ProductInfoModal/ProductInfoModal";
+import ProductInfoModal from "../Modal/ProductInfoModal";
 import { DataGrid } from "@mui/x-data-grid";
-import { Row, Col } from "react-bootstrap"; 
+import { Row, Col } from "react-bootstrap";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 
 export default function Details() {
-  const { orderId } = useParams(); 
+  const { orderId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
 
@@ -26,7 +26,6 @@ export default function Details() {
   }, [orderId]);
 
   const toggleDetails = (index) => {
-
     setIsProductInfoModalOpen(!isProductInfoModalOpen);
   };
 

@@ -25,7 +25,10 @@ export default function Orders() {
     }
   }, []);
   useEffect(() => {
-    const totalPrice = orders.reduce((total, order) => total + order.TotalPrice, 0);
+    const totalPrice = orders.reduce(
+      (total, order) => total + order.TotalPrice,
+      0
+    );
     setTotalPrice(totalPrice);
 
     const totalOrders = orders.length;
@@ -38,7 +41,7 @@ export default function Orders() {
       console.log(response);
       const productsWithId = response.data.map((orders, index) => ({
         ...orders,
-        id: index + 1, 
+        id: index + 1,
       }));
       setOrders(productsWithId);
     } catch (error) {
@@ -49,9 +52,7 @@ export default function Orders() {
   const deleteOrders = async (orderId) => {
     try {
       await AxiosClient.delete(`/api/Orders/${orderId}`);
-      const updatedOrders = orders.filter(
-        (orders) => orders.id !== orderId
-      );
+      const updatedOrders = orders.filter((orders) => orders.id !== orderId);
       setOrders(updatedOrders);
       fetchOrders();
     } catch (error) {
@@ -74,13 +75,16 @@ export default function Orders() {
     { field: "OrderImageId", headerName: "OrderImageID", width: 130 },
     { field: "TotalPrice", headerName: "Price", width: 130 },
     { field: "CreationDate", headerName: "Date", width: 130 },
-    { field: "Status", renderCell: (params) => {
-      if (params.row.Status === 1) {
-        return ( <IoIosCheckbox className="icon-table" /> );
-      } else if (params.row.Status === 2) {
-        return null; 
-      }
-    } },
+    {
+      field: "Status",
+      renderCell: (params) => {
+        if (params.row.Status === 1) {
+          return <IoIosCheckbox className="icon-table" />;
+        } else if (params.row.Status === 2) {
+          return null;
+        }
+      },
+    },
     {
       field: "detail",
       headerName: "Detail",
@@ -145,8 +149,8 @@ export default function Orders() {
         <div className="row">
           <div className="mume markdown-preview">
             <Row className="justify-content-center">
-              <Col>
               <h2>Total Price: {totalPrice}</h2>
+              <Col>
                 <DataGrid
                   className="table-manage-order-box"
                   rows={orders}
