@@ -37,7 +37,11 @@
   align-items: center;
 }
 
-.form-group input {
+.form-group select {
+  width: 70%;
+}
+
+.form-group input[type="text"] {
   width: 70%;
 }
 

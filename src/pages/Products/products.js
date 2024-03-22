@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaRegEdit } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdAddCircleOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
@@ -71,7 +71,7 @@ export default function Products() {
     { field: "Description", headerName: "Description", width: 130 },
     { field: "Quantity", headerName: "Quantity", width: 130 },
     { field: "Code", headerName: "Code", width: 130 },
-    { field: "BrandId", headerName: "BrandId", width: 130 },
+    { field: "BrandId", headerName: "Brand Id", width: 130 },
     {
       field: "Status",
       headerName: "Status",
@@ -125,10 +125,38 @@ export default function Products() {
     align: "center",
   }));
 
+  const handleProductSubmit = async (updatedProduct) => {
+    try {
+      const response = await AxiosClient.put(
+        `/api/Product/${selectedProduct.Id}`,
+        updatedProduct
+      );
+      if (response.ok) {
+        const updatedData = await response.json();
+        // Cập nhật state products với sản phẩm được cập nhật
+        const updatedProducts = products.map((p) =>
+          p.Id === selectedProduct.Id ? updatedData : p
+        );
+        setProducts(updatedProducts);
+        handleModalClose();
+      } else {
+        console.error("Error updating product:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="management-container">
-      <h1>Management Products</h1>
-      <button>create</button>
+      <h2>Management Products</h2>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleEditClick(null)}
+      >
+        <MdAddCircleOutline className="icon-table" />
+      </Button>
       <div className="container-fluid">
         <div className="row">
           <div className="mume markdown-preview">
@@ -151,8 +179,10 @@ export default function Products() {
           show={editModalShow}
           onHide={handleModalClose}
           product={selectedProduct}
+          iscreate="true"
         />
       )}
+      {/* onSubmit={handleProductSubmit} */}
     </div>
   );
 }
