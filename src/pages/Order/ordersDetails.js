@@ -8,14 +8,16 @@ import { Row, Col } from "react-bootstrap";
 import AxiosClient from "../../api/axiosClient"; // Import AxiosClient for API calls
 
 export default function Details() {
-  const { orderId } = useParams();
+  const { orderId, productId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [isProductInfoModalOpen, setIsProductInfoModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await AxiosClient.get(`/api/Orders/${orderId}`);
+        const response = await AxiosClient.get(
+          `/api/Orders/ViewOrderDetails/${productId}`
+        );
         setOrderDetails(response.data);
       } catch (error) {
         console.error("Error fetching order details:", error);
@@ -23,17 +25,19 @@ export default function Details() {
     };
 
     fetchOrderDetails();
-  }, [orderId]);
+  }, [productId]);
 
+  console.log("order", orderDetails);
   const toggleDetails = (index) => {
     setIsProductInfoModalOpen(!isProductInfoModalOpen);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 60 },
-    { field: "name", headerName: "Name", width: 90 },
-    { field: "description", headerName: "Description", width: 300 },
-    { field: "price", headerName: "Price", width: 90 },
+    { field: "OrderId", headerName: "Id", width: 60 },
+    { field: "MachineName", headerName: "MachineName", width: 100 },
+    { field: "StoreName", headerName: "StoreName", width: 300 },
+    { field: "BrandName", headerName: "BrandName", width: 90 },
+    { field: "TotalPrice", headerName: "TotalPrice", width: 90 },
     {
       field: "viewDetail",
       headerName: "View Detail",
@@ -72,7 +76,7 @@ export default function Details() {
                 },
               }}
               pageSizeOptions={[5, 10]}
-              getRowId={(row) => row.id}
+              getRowId={(row) => row.OrderId}
             />
           </Col>
         </Row>

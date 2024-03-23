@@ -62,14 +62,14 @@ export default function Orders() {
     }
   };
 
-  const handleDetailsClick = (orderId) => {
-    navigate(`/ordersID/${orderId}`);
+  const handleDetailsClick = (ordId) => {
+    navigate(`/ordersID/${ordId}`);
   };
 
   const columns = [
     {
       field: "Id",
-      headerName: "No",
+      headerName: "Id",
       width: 70,
     },
     { field: "MachineId", headerName: "MachineID", width: 130 },
