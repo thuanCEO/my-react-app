@@ -1,36 +1,51 @@
+// Accounts.jsx
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaRegEdit } from "react-icons/fa";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
-import AxiosClient from "../../api/axiosClient"; 
+import AxiosClient from "../../api/axiosClient";
 import "./../../components/common/styles/accountUser.css";
-import {  IoIosCheckbox } from "react-icons/io";
+import { IoIosCheckbox } from "react-icons/io";
+import EditAccountModal from "../Modal/AcccountModal/EditAccountModal";
 
 export default function Accounts() {
-  const [users, setUser] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [totalUsers, setTotalUsers] = useState(0); 
+  const [users, setUsers] = useState([]); // Đổi setUser thành setUsers để phản ánh đúng mục đích
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // Đổi selectedProduct thành selectedUser để phản ánh đúng mục đích
+
+  const handleEditClick = (user) => {
+    setSelectedUser(user); // Đổi selectedProduct thành selectedUser để phản ánh đúng mục đích
+    setEditModalShow(true);
+  };
+
+  const handleModalClose = () => {
+    setEditModalShow(false);
+    setSelectedUser(null);
+  };
 
   useEffect(() => {
-   
     fetchUsers();
   }, []);
+
   useEffect(() => {
     setTotalUsers(users.length);
   }, [users]);
+
   const fetchUsers = async () => {
     try {
       const response = await AxiosClient.get("/api/Users");
-      const usersWithId = response.data.map((orders, index) => ({
-        ...orders,
-        id: index + 1, 
+      const usersWithId = response.data.map((user, index) => ({ 
+        ...user,
+        id: index + 1,
       }));
-      setUser(usersWithId);
+      setUsers(usersWithId); 
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching users:", error); 
     }
   };
+
   const columns = [
     {
       field: "Id",
@@ -45,12 +60,12 @@ export default function Accounts() {
     {
       field: "Status",
       headerName: "Status",
-      width: 130,
+      width: 50,
       renderCell: (params) => {
         if (params.row.Status === 1) {
-          return <IoIosCheckbox className="icon-table icon-green" />;
-        } else if (params.row.Status === 0) {
-          return <IoIosCheckbox className="icon-table icon-red" />;
+          return <IoIosCheckbox className="icon-table" />;
+        } else if (params.row.Status === 2) {
+          return null;
         }
       },
     },
@@ -61,7 +76,11 @@ export default function Accounts() {
       width: 80,
       renderCell: (params) => {
         return (
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleEditClick(params.row)}
+          >
             <FaRegEdit className="icon-table" />
           </Button>
         );
@@ -78,7 +97,7 @@ export default function Accounts() {
     <div className="container-fluid">
       <div className="container-fluid">
         <div className="row">
-        <div className="mume markdown-preview">
+          <div className="mume markdown-preview">
             <Row className="justify-content-center">
               <Col>
                 <DataGrid
@@ -93,6 +112,14 @@ export default function Accounts() {
           </div>
         </div>
       </div>
+      {editModalShow && (
+        <EditAccountModal
+          show={editModalShow}
+          onHide={handleModalClose}
+          account={selectedUser} // Đổi product thành account để phản ánh đúng mục đích
+          iscreate="true"
+        />
+      )}
     </div>
   );
 }
