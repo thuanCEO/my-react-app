@@ -18,6 +18,7 @@ export default function Products() {
   const [editModalShow, setEditModalShow] = useState(false);
   const [createModalShow, setCreateModalShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const storedBrand = sessionStorage.getItem("brand");
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
