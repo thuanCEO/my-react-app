@@ -10,15 +10,17 @@ import "./../../components/common/styles/products.css";
 import { IoIosCheckbox } from "react-icons/io";
 import EditProductModal from "../Modal/EditProduct";
 import CreateProductModal from "../Modal/CreateProduct";
+import { useNavigate } from "react-router-dom";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  // eslint-disable-next-line no-unused-vars
+
   const [totalProducts, setTotalProducts] = useState(0);
   const [editModalShow, setEditModalShow] = useState(false);
   const [createModalShow, setCreateModalShow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const storedBrand = sessionStorage.getItem("brand");
+  const navigate = useNavigate();
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
@@ -28,31 +30,34 @@ export default function Products() {
   const handleModalClose = () => {
     setEditModalShow(false);
     setCreateModalShow(false);
-    setSelectedProduct(null); // Xóa sản phẩm được chọn khi đóng
+    setSelectedProduct(null);
   };
+
   const handleCreateClick = () => {
     setCreateModalShow(true);
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    viewProductsByBrand(storedBrand);
+  }, [storedBrand]);
 
   useEffect(() => {
     const totalProducts = products.length;
     setTotalProducts(totalProducts);
   }, [products]);
 
-  const fetchProducts = async () => {
+  const viewProductsByBrand = async (brandId) => {
     try {
-      const response = await AxiosClient.get("/api/Products");
+      const response = await AxiosClient.get(
+        `/api/Products/ViewProductByBrand/${brandId}`
+      );
       const productsWithId = response.data.map((product, index) => ({
         ...product,
         id: index + 1,
       }));
       setProducts(productsWithId);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error viewing products by brand:", error);
     }
   };
 
@@ -63,7 +68,6 @@ export default function Products() {
         (product) => product.id !== productId
       );
       setProducts(updatedProducts);
-      fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
     }

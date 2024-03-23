@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { BiSolidDetail } from "react-icons/bi";
-import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import { Button } from "@mui/material";
@@ -15,7 +14,7 @@ export default function Orders() {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
   const [role, setUserRole] = useState(0);
-
+  const storedBrand = sessionStorage.getItem("brand");
   useEffect(() => {
     fetchOrders();
     const roleFromSession = sessionStorage.getItem("role");
@@ -34,7 +33,15 @@ export default function Orders() {
 
   const fetchOrders = async () => {
     try {
-      const response = await AxiosClient.get("/api/Orders");
+      let response;
+      if (storedBrand) {
+        // Gọi API ViewOrderByBrand nếu có brandId trong sessionStorage
+        response = await AxiosClient.get(
+          `/api/Orders/ViewOrderByBrand/${storedBrand}`
+        );
+      } else {
+        response = await AxiosClient.get("/api/Orders");
+      }
       const productsWithId = response.data.map((order, index) => ({
         ...order,
         id: index + 1,
