@@ -153,10 +153,8 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
             >
               <option value="">{formData.CategoryId}</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {" "}
-                  {/* Use category.id for value */}
-                  {category.Title}
+                <option key={category.Id} value={category.Id}>
+                  {category.Id}
                 </option>
               ))}
             </select>

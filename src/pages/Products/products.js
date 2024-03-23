@@ -85,7 +85,7 @@ export default function Products() {
     { field: "Quantity", headerName: "Quantity", width: 80 },
     { field: "Code", headerName: "Code", width: 70 },
     { field: "BrandId", headerName: "Brand Id", width: 90 },
-    { field: "Category", headerName: "Category", width: 130 }, //add category
+    { field: "CategoryId", headerName: "CategoryId", width: 130 }, //add category
     {
       field: "Status",
       headerName: "Status",
@@ -145,13 +145,9 @@ export default function Products() {
         `/api/Products/${selectedProduct.Id}`,
         updatedProduct
       );
+
       if (response.ok) {
-        const updatedData = await response.json();
-        // Cập nhật state products với sản phẩm được cập nhật
-        const updatedProducts = products.map((p) =>
-          p.Id === selectedProduct.Id ? updatedData : p
-        );
-        setProducts(updatedProducts);
+        viewProductsByBrand();
         handleModalClose();
       } else {
         console.error("Error updating product:", response.statusText);
@@ -163,18 +159,9 @@ export default function Products() {
 
   const handleProductSubmitCreate = async (formData) => {
     try {
-      const response = await fetch("/api/Product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await AxiosClient.post(`/api/Products`, formData);
 
       if (response.ok) {
-        const newProduct = await response.json();
-        setProducts([...products, newProduct]); // Cập nhật danh sách sản phẩm
-        handleModalClose(); // Đóng CreateProductModal
         // Thêm thông báo thành công (tùy chọn)
         console.log("Product added successfully!");
       } else {

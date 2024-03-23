@@ -117,11 +117,8 @@ function CreateProductModal({ show, onHide, onSubmit }) {
             >
               <option value="">Select Category</option>
               {categories.map((category) => (
-                <option
-                  key={category.id}
-                  value={{ id: category.id, title: category.Title }}
-                >
-                  {category.Title}
+                <option key={category.Id} value={category.Id}>
+                  {category.Id}
                 </option>
               ))}
             </select>
