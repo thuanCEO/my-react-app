@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap"; // Import Modal from react-bootstrap
+import axiosClient from "../../api/axiosClient";
 
 function EditProductModal({ show, onHide, product, onSubmit }) {
   const [formData, setFormData] = useState(() => ({
@@ -61,10 +62,8 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(""); // Replace with your API endpoint
-        const data = await response.json();
-        // const data = mockCategories;
-        setCategories(data);
+        const response = await axiosClient.get("/api/Categories"); // Replace with your API endpoint
+        setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -149,13 +148,15 @@ function EditProductModal({ show, onHide, product, onSubmit }) {
               className="form-control"
               id="CategoryId"
               name="CategoryId"
-              value={formData.CategoryId}
+              value={formData.CategoryId} // Use formData.CategoryId for comparison
               onChange={handleChange}
             >
-              <option value="">Select Category</option>
+              <option value="">{formData.CategoryId}</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
-                  {category.name}
+                  {" "}
+                  {/* Use category.id for value */}
+                  {category.Title}
                 </option>
               ))}
             </select>

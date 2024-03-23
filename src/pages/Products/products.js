@@ -36,10 +36,12 @@ export default function Products() {
   useEffect(() => {
     fetchProducts();
   }, []);
+
   useEffect(() => {
     const totalProducts = products.length;
     setTotalProducts(totalProducts);
   }, [products]);
+
   const fetchProducts = async () => {
     try {
       const response = await AxiosClient.get("/api/Products");

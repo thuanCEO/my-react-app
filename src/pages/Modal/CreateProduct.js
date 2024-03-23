@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap"; // Import Modal from react-bootstrap
+import axiosClient from "../../api/axiosClient";
 
 function CreateProductModal({ show, onHide, onSubmit }) {
   const [formData, setFormData] = useState(() => ({
@@ -7,20 +8,19 @@ function CreateProductModal({ show, onHide, onSubmit }) {
     Price: "",
     Quantity: "",
     Description: "",
-    CategoryId: "",
+    CategoryId: -1,
   }));
 
   const [categories, setCategories] = useState([]);
 
   const handleChange = (event) => {
+    console.log("event", event);
     const isNumericField =
       event.target.name === "Price" || event.target.name === "Quantity";
     const newValue = isNumericField
       ? event.target.value.replace(/[^\d]/g, "") // Remove non-numeric characters for numeric fields
       : event.target.value; // Allow all characters for other fields
-    if (event.target.name === "Quantity" && parseInt(newValue) < 1) {
-      return; // Ngăn cập nhật giá trị nếu không hợp lệ
-    }
+
     setFormData({
       ...formData,
       [event.target.name]: newValue,
@@ -37,9 +37,8 @@ function CreateProductModal({ show, onHide, onSubmit }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(""); // Replace with your API endpoint
-        const data = await response.json();
-        setCategories(data);
+        const response = await axiosClient.get("/api/Categories"); // Replace with your API endpoint
+        setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -118,8 +117,11 @@ function CreateProductModal({ show, onHide, onSubmit }) {
             >
               <option value="">Select Category</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
+                <option
+                  key={category.id}
+                  value={{ id: category.id, title: category.Title }}
+                >
+                  {category.Title}
                 </option>
               ))}
             </select>

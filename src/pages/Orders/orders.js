@@ -100,19 +100,6 @@ export default function Orders() {
       },
     },
     {
-      field: "edit",
-      headerName: "Edit",
-      sortable: false,
-      width: 90,
-      renderCell: (params) => {
-        return (
-          <Button variant="contained" color="primary">
-            <FaRegEdit className="icon-table" />
-          </Button>
-        );
-      },
-    },
-    {
       field: "delete",
       headerName: "Delete",
       sortable: false,
